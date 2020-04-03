@@ -8,7 +8,7 @@ export default class Farmer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      accounts: null,
+      account: null,
       fname:'',
       lname:'',
       idno:'',
@@ -37,12 +37,19 @@ export default class Farmer extends React.Component {
   async handleSubmit(event){
     event.preventDefault();
 
+    const address = await Portis.connectPortis();
+    this.setState({
+        account: address,
+    })
+
     // post request with all the input params
     const { fname, lname } = this.state;
 
     const data = {
-      fname,
-      lname,
+        ethereumAddress: address,
+        ipfsHash: '0x2',
+        fname,
+        lname,
     }
 
     axios
@@ -52,7 +59,6 @@ export default class Farmer extends React.Component {
         console.error(err);
       });
 
-    this.state.accounts = await Portis.connectPortis();
     this.props.history.push('../farmerProfile');
   }
 
