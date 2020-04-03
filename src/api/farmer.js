@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
-const MySQL = require('./mysql_farmer');
+const MySQL = require('../db/mysql');
 
 // use cors to allow cross origin resource sharing.
 app.use(
