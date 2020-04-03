@@ -2,13 +2,13 @@ import React from 'react';
 import axios from 'axios';
 
 import './FarmerStyle.css';
-
-// import Portis from '../../api/portis';
+import Portis from '../../api/portis';
 
 export default class Farmer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      accounts: null,
       fname:'',
       lname:'',
       idno:'',
@@ -52,6 +52,7 @@ export default class Farmer extends React.Component {
         console.error(err);
       });
 
+    this.state.accounts = await Portis.connectPortis();
     this.props.history.push('../farmerProfile');
   }
 

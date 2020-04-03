@@ -7,6 +7,7 @@ class PortisClass {
     const web3 = new Web3(portis.provider);
     const account = await web3.eth.getAccounts();
 
+    console.log('accounts :-', account);
     return account;
   }
 }

@@ -23,7 +23,6 @@ app.post('/create', function(req, res) {
 
   const sql = `INSERT INTO farmer_info
     values(
-      1,
       '0x1bBb3d28254c8a8C94Cea364af1663C40Ee6E4a6',
       '0x64EC88CA00B268E5BA1A35678A1B5316D212F4F366B2477232534A8AECA37F3C',
       '${newFarmer.fname}',
