@@ -1,8 +1,9 @@
 import React from 'react';
+import axios from 'axios';
+
 import './FarmerStyle.css';
 
-import Portis from '../../api/portis';
-// import FormValidation from './SignUpFormValidation';
+// import Portis from '../../api/portis';
 
 export default class Farmer extends React.Component {
   constructor(props) {
@@ -35,17 +36,23 @@ export default class Farmer extends React.Component {
 
   async handleSubmit(event){
     event.preventDefault();
-    // FormValidation.validation(
-    //   this.state.fname,
-    //   this.state.lname,
-    //   this.state.idno,
-    //   this.state.email,
-    //   this.state.type
 
-    // );
-    this.state.account = await Portis.connectPortis();
+    // post request with all the input params
+    const { fname, lname } = this.state;
+
+    const data = {
+      fname,
+      lname,
+    }
+
+    axios
+      .post('http://localhost:3001/create', data)
+      .then(() => console.log('Farmer added'))
+      .catch(err => {
+        console.error(err);
+      });
+
     this.props.history.push('../farmerProfile');
-    // alert('fname :'+ this.state.fname + '\nlname :' + this.state.lname, + '\nidno :' + this.state.idno + '\nemail :' + this.state.email + '\ntype :' + this.state.type);
   }
 
   render() {

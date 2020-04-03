@@ -1,39 +1,33 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Portis from '@portis/web3';
+// import Portis from '@portis/web3';
 import './NavStyle.scss'
-const portis = new Portis('4e5c7a30-2bbf-41db-92fa-0bbe1ae94d9b', 'mainnet');
+// const portis = new Portis('4e5c7a30-2bbf-41db-92fa-0bbe1ae94d9b', 'mainnet');
 
 
 
 export default class Navbar extends React.Component {
   state = {
-
     wallet:'',
   };
 
+  // logoutPortis(event){
+  //   portis.logout();
+  //   alert("Logged out from porits wallet.");
+
+  //   // redirect to home page
+
+  // }
+
+  // async componentDidMount(){
+  //   PushSubscriptionOptions.onLogin(wallet => {
+  //     alert("Logged in");
+  //     this.setState({wallet});
+  //   });
+  // }
 
 
-  logoutPortis(event){
-    portis.logout();
-    alert("Logged out from porits wallet.");
-
-    // redirect to home page
-    
-  }
-
-  async componentDidMount(){
-    PushSubscriptionOptions.onLogin(wallet => {
-      alert("Logged in");
-      this.setState({wallet});
-    });
-  }
-
-  
   render() {
-
-   
-
     return (
 
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -52,19 +46,19 @@ export default class Navbar extends React.Component {
               <li className="nav-item">
                 <Link to="/vendor" className="nav-link">Vendor</Link>
               </li>
-            
+
             </ul>
           </div>
           <div className="status">
             {(
               <p className="network-name">
-                
+
                 {this.state.wallet && (
                   <React.Fragment>
                     <br />
                     <span className="wallet-address">
                       <span title={this.state.wallet}>
-                        
+
                         {this.state.wallet.substring(0, 5) +
                           '...' +
                           this.state.wallet.substring(this.state.wallet.length - 3)}
@@ -77,19 +71,16 @@ export default class Navbar extends React.Component {
                 )}
               </p>
             )}
-           
+
           </div>
 
-          <button class="portis-button" onClick={() => portis.showPortis()} >Account info</button>
+          {/* <button class="portis-button" onClick={() => portis.showPortis()} >Account info</button> */}
 
           <button className="logout-button" variant="contained" onClick={this.logoutPortis} color="secondary" id="Logout">Logout</button>
-          
 
         </nav>
-      
+
     );
   }
 
 }
-
-
