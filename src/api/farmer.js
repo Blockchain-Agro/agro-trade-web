@@ -15,14 +15,13 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.post('/create', function(req, res) {
+app.post('/create', async function(req, res) {
   const newFarmer = {
     ethereumAddress: req.body.ethereumAddress,
     ipfsHash: req.body.ipfsHash,
     fname: req.body.fname,
     lname: req.body.lname,
   };
-
   // TO Do: static ipfs hash is used change it to actual dynamic
   const sql = `INSERT INTO farmer_info
     values(

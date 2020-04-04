@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import './FarmerStyle.css';
 import Portis from '../../api/portis';
+import IPFS from '../../api/ipfs';
 
 export default class Farmer extends React.Component {
   constructor(props) {
@@ -34,8 +35,13 @@ export default class Farmer extends React.Component {
     this.setState(change)
 }
 
-  async handleSubmit(event){
+  async handleSubmit(event) {
     event.preventDefault();
+
+    // //Further code is to retrieve data
+    //  buffer = await ipfs.cat(ipfsHash.toString());
+    //  var temp = JSON.parse(buffer.toString());
+    //  alert("Retreived data from ipfs : " + temp);
 
     const address = await Portis.connectPortis();
     this.setState({
@@ -45,13 +51,18 @@ export default class Farmer extends React.Component {
     // post request with all the input params
     const { fname, lname } = this.state;
 
-    const data = {
+    const dataForIpfs = {
         ethereumAddress: address,
-        ipfsHash: '0x2',
         fname,
         lname,
     }
-
+    const ipfsHash = await IPFS.getIpfsHash(dataForIpfs);
+    const data = {
+        ethereumAddress: address,
+        ipfsHash,
+        fname,
+        lname,
+    }
     axios
       .post('http://localhost:3001/create', data)
       .then(() => console.log('Farmer added'))
@@ -59,7 +70,7 @@ export default class Farmer extends React.Component {
         console.error(err);
       });
 
-    this.props.history.push('../farmerProfile');
+    this.props.history.push(`../farmerProfile:${this.state}`);
   }
 
   render() {
