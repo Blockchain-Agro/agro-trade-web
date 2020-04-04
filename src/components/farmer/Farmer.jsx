@@ -70,7 +70,7 @@ export default class Farmer extends React.Component {
         console.error(err);
       });
 
-    this.props.history.push(`../farmerProfile:${this.state}`);
+    this.props.history.push('../farmerProfile');
   }
 
   render() {
