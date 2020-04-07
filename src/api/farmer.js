@@ -23,7 +23,7 @@ app.post('/create', async function(req, res) {
     lname: req.body.lname,
   };
   // TO Do: static ipfs hash is used change it to actual dynamic
-  const sql = `INSERT INTO farmer_info
+  const sql = `INSERT INTO farmer_info(ethereum_address, ipfs_hash, first_name, last_name)
     values(
       '${newFarmer.ethereumAddress}',
       '${newFarmer.ipfsHash}',

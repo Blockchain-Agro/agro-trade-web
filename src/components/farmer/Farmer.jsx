@@ -2,10 +2,11 @@ import React from 'react';
 import axios from 'axios';
 
 import './FarmerStyle.css';
+import { withRouter } from 'react-router-dom';
 import Portis from '../../api/portis';
 import IPFS from '../../api/ipfs';
 
-export default class Farmer extends React.Component {
+class Farmer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,11 +39,6 @@ export default class Farmer extends React.Component {
   async handleSubmit(event) {
     event.preventDefault();
 
-    // //Further code is to retrieve data
-    //  buffer = await ipfs.cat(ipfsHash.toString());
-    //  var temp = JSON.parse(buffer.toString());
-    //  alert("Retreived data from ipfs : " + temp);
-
     const address = await Portis.connectPortis();
     this.setState({
         account: address,
@@ -70,7 +66,14 @@ export default class Farmer extends React.Component {
         console.error(err);
       });
 
-    this.props.history.push('../farmerProfile');
+    this.props.history.push({
+        pathname: '../farmerProfile',
+        state: {
+            fname: this.state.fname,
+            lname: this.state.lname,
+            email: this.state.email,
+        }
+    });
   }
 
   render() {
@@ -233,3 +236,5 @@ export default class Farmer extends React.Component {
     );
   }
 }
+
+export default withRouter(Farmer);

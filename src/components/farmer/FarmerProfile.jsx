@@ -1,10 +1,21 @@
 import React, { Component } from 'react';
 
 class FarmerProfile extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            fname: this.props.location.state.fname,
+            lname: this.props.location.state.lname,
+            email: this.props.location.state.email,
+        }
+    }
   render () {
     return (
         <div>
-            <h1>Farmer Profile</h1>
+            <h1>Farmer Profile </h1>
+            <h2>First name : {this.state.fname}</h2>
+            <h2>Last name : {this.state.lname}</h2>
+            <h2>Email : {this.state.email}</h2>
         </div>
     )
   }
