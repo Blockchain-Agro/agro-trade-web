@@ -1,3 +1,7 @@
+.introduction {
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
 .agro
 {
     padding-top:50px;
@@ -21,4 +25,19 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.first-image {
+    background-image: url("minato.jpg");
+    height: 300px;
+    width: 400px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.row {
+    margin-block-start: 200px;
+    margin-block-end: 200px;
+    padding-left: 20px;
+    padding-right: 40px;
 }
