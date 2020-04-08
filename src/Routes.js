@@ -14,12 +14,12 @@ export default class Routes extends Component {
     return (
       <BrowserRouter>
 
-      <Route exact path="/" component={ Home } />
-      <Route path="/farmer" component={ Farmer } />
-      <Route path="/vendor" component={ Vendor } />
-      <Route path="/productvendor" component={ Productvendor }/>
-      <Route path="/farmerProfile" component={ FarmerProfile } />
-      <Route path="/productinfovendor" component={ ProductInfoVendor } />
+        <Route exact path="/" component={ Home } />
+        <Route path="/farmer" component={ Farmer } />
+        <Route path="/vendor" component={ Vendor } />
+        <Route path="/productvendor" component={ Productvendor }/>
+        <Route path="/farmerProfile" component={ FarmerProfile } />
+        <Route path="/productinfovendor" component={ ProductInfoVendor } />
       </BrowserRouter>
     );
   };

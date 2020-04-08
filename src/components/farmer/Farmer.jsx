@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 import './FarmerStyle.css';
+import Navbar from '../other/Home/Navbar';
 import { withRouter } from 'react-router-dom';
 import Portis from '../../api/portis';
 import IPFS from '../../api/ipfs';
@@ -78,6 +79,9 @@ class Farmer extends React.Component {
 
   render() {
     return (
+        <div>
+        <Navbar />
+
       <div className="farmerLoginForm">
 
       <form onSubmit={this.handleSubmit}>
@@ -232,6 +236,7 @@ class Farmer extends React.Component {
 
 		</ul>
       </form>
+      </div>
       </div>
     );
   }

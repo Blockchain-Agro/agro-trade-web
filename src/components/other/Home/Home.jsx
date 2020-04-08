@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import "./home.css";
-import NavbarHome from './NavbarHome.js';
+import Navbar from './Navbar.js';
 
 export default class Home extends Component {
   render () {
     return (
      <div className="home">
-        <NavbarHome/>
-        <label  className="agro">Agrotrade</label>
-        <h1 className="pad">A Blockchain Based Decentralized Platform for Trading Agricultural Products</h1>
+        <Navbar/>
+        <label  className="agro">AgroTrade</label>
+        <h1 className="pad">A Blockchain Based Platform for Trading Agricultural Products</h1>
         <div className="network-image" />
         <div className="container">
             <div className="introduction">

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import Navbar from './Navbar';
 class FarmerProfile extends Component {
     constructor(props) {
         super(props);
@@ -12,6 +13,7 @@ class FarmerProfile extends Component {
   render () {
     return (
         <div>
+            <Navbar />
             <h1>Farmer Profile </h1>
             <h2>First name : {this.state.fname}</h2>
             <h2>Last name : {this.state.lname}</h2>
