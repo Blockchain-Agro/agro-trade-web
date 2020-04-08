@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
-import Navbar from './components/other/Navbar';
-import NavbarHome from './components/other/NavbarHome';
-import Home from './components/other/Home';
+import Home from './components/other/Home/Home';
 import Farmer from './components/farmer/Farmer';
 import Vendor from './components/vendor/Vendor';
 import Productvendor from './components/vendor/Productvendor'

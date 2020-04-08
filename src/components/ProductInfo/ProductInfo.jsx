@@ -1,6 +1,6 @@
-import React,{ Component } from 'react';
+import React,{ Component } from './node_modules/react';
 import './productStyle.css';
-import Calendar from 'react-calendar';
+import Calendar from './node_modules/react-calendar';
 export default class ProductInfo extends Component {
   constructor(props) {
     super(props);
