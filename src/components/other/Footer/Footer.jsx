@@ -1,13 +1,14 @@
-import './styles.scss';
 import React from 'react';
-
+import './styles.scss';
 
 const Footer = React.FunctionComponent = () => (
-  <footer className="footer">
-    <div className="container">
-      <div className="copyright">&copy; {new Date().getFullYear()} AgroTrade</div>
+    <div className="footer">
+        <footer class="page-footer font-small blue">
+            <div class="footer-copyright text-center py-3">© 2020 Copyright:
+                <p>AgroTrade</p>
+            </div>
+        </footer>
     </div>
-  </footer>
 );
 
 export default Footer;
