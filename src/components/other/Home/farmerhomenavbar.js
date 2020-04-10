@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './NavStyle.scss'
+import { Button} from 'reactstrap';
 
 export default class Navbar extends React.Component {
   state = {
@@ -17,16 +18,12 @@ export default class Navbar extends React.Component {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
               <li className="nav-item active">
-                <Link to="/" className="nav-link">Home </Link>
-              </li>
-              <li  className="nav-item active">
-                <Link to="/farmerLogin" className="nav-link">Farmer </Link>
-              </li>
-                <li className="nav-item active">
-                <Link to="/vendorlogin" className="nav-link">Vendor </Link>
+                <Link to="/" className="nav-link">Farmer Sign Up</Link>
               </li>
             </ul>
           </div>
+
+          <Button variant="contained"  color="secondary" id="Logout">Login</Button>
         </nav>
     );
   }

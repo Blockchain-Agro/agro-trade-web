@@ -3,10 +3,19 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 import Home from './components/other/Home/Home';
 import Farmer from './components/farmer/Farmer';
+import FarmerLogin from './components/farmer/FarmerLogin';
 import Vendor from './components/vendor/Vendor';
+import VendorLogin from './components/vendor/VendorLogin';
 import Productvendor from './components/vendor/Productvendor'
 import ProductInfoVendor from './components/vendor/Productinfovendor'
+import PendingProduct from './components/farmer/PendingProduct';
+import PPendingProduct from './components/vendor/PendingProduct';
+import BoughtProduct from './components/vendor/BoughtProduct';
+import VendorNotification from './components/vendor/VendorNotification';
+import SoldProduct from './components/farmer/SoldProduct';
+import FarmerNotification from './components/farmer/FarmerNotification';
 import FarmerProfile from './components/farmer/FarmerProfile';
+import VendorProfile from './components/vendor/VendorProfile';
 
 
 export default class Routes extends Component {
@@ -16,10 +25,21 @@ export default class Routes extends Component {
 
         <Route exact path="/" component={ Home } />
         <Route path="/farmer" component={ Farmer } />
+
         <Route path="/vendor" component={ Vendor } />
         <Route path="/productvendor" component={ Productvendor }/>
+        <Route path="/vendorProfile" component={ VendorProfile } />
+        <Route path="/productInfoVendor" component={ ProductInfoVendor } />
+        <Route path="/vendorLogin" component={ VendorLogin } />
+        <Route path="/pendingProductVendor" component={ PPendingProduct } />
+        <Route path="/boughtProduct" component={ BoughtProduct } />
+        <Route path="/vendorNotification" component={ VendorNotification } />
+
         <Route path="/farmerProfile" component={ FarmerProfile } />
-        <Route path="/productinfovendor" component={ ProductInfoVendor } />
+        <Route path="/farmerLogin" component={ FarmerLogin } />
+        <Route path="/pendingProductFarmer" component={ PendingProduct } />
+        <Route path="/soldProduct" component={ SoldProduct } />
+        <Route path="/farmerNotification" component={ FarmerNotification } />
       </BrowserRouter>
     );
   };

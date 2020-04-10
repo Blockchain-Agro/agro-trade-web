@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardText, CardBody,
+import { Card, CardText, CardBody, Button,
   CardTitle, CardSubtitle } from 'reactstrap';
 import './style.css'
 
@@ -26,7 +26,7 @@ this.handlechane = this.handlechane.bind(this);
             <CardText>Price : {price_per_kg}</CardText>
             <CardText>Quantity : {quantity_in_kg}</CardText>
             <CardText>Expiry Date : {expiry_date}</CardText>
-            <button onClick={this.handlechane}>View Info</button>
+            <Button onClick={this.handlechane}>View Info</Button>
           </CardBody>
         </Card>
       </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import './VendorStyle.css';
+import Navbar from './vendorhomenavbar';
 
 export default class Vendor extends React.Component {
   constructor(props) {
@@ -33,7 +34,7 @@ export default class Vendor extends React.Component {
   handleSubmit(event){
     alert('fname :'+ this.state.fname + '\nlname :' + this.state.lname + '\nidno :' + this.state.idno + '\nemail :' + this.state.email + '\ntype :' + this.state.type);
     this.props.history.push({
-        pathname: '../Productvendor',
+        pathname: '../vendorProfile',
         state: {
             fname: this.state.fname,
             lname: this.state.lname,
@@ -45,19 +46,22 @@ export default class Vendor extends React.Component {
 
   render() {
     return (
+    <div>
+      <Navbar/>
+      <div className="farmerLoginForm">
 
       <form onSubmit={this.handleSubmit}>
 
-			<div id="cid_1" className="form-input-wide" data-type="control_head">
-				<div className="form-header-group ">
-				<div className="header-text httal htvam">
-				<h1 id="header_1" className="form-header" data-component="header">
-				VENDOR SIGN UP
-				</h1>
-				</div>
-				</div>
-			</div>
-			<ul className="form-section page-section">
+      <div id="cid_1" class="form-input-wide" data-type="control_head">
+        <div class="form-header-group ">
+        <div class="header-text httal htvam">
+        <h1 id="header_1" class="form-header" data-component="header">
+        VENDOR SIGN UP
+        </h1>
+        </div>
+        </div>
+      </div>
+      <ul class="form-section page-section">
 
 			<li className="form-line jf-required" data-type="control_textbox" id="id_2">
 				<label className="form-label form-label-left form-label-auto" id="label_2" >
@@ -107,21 +111,6 @@ export default class Vendor extends React.Component {
           <input type="text" value={this.state.email} onChange={this.handleChange}id="input_5" name="email" data-type="input-textbox" className="form-textbox validate[required]" size="20"  placeholder=" " data-component="textbox" aria-labelledby="label_5" required="" />
         </div>
       </li>
-
-            <li className="form-line" data-type="control_dropdown" id="id_13">
-        <label className="form-label form-label-left form-label-auto" id="label_13" for="input_13"> TYPE OF VEGES </label>
-        <div id="cid_13" className="form-input">
-          <select value={this.state.type} onChange={this.handleChange} className="form-dropdown" id="input_13" name="q13_typeOf"  data-component="dropdown" aria-labelledby="label_13">
-
-            <option value="Dark-Green"> Dark-Green </option>
-            <option value="Red and Orange"> Red and Orange </option>
-            <option value="Starchy"> Starchy </option>
-            <option value="Beans and Peas"> Beans and Peas </option>
-            <option value="Other"> Other </option>
-          </select>
-        </div>
-      </li>
-
 
       <li className="form-line" data-type="control_phone" id="id_11">
         <label className="form-label form-label-left form-label-auto" id="label_11" for="input_11_area"> Phone Number </label>
@@ -200,8 +189,10 @@ export default class Vendor extends React.Component {
 
 
 
-
       </form>
+        </div>
+        </div>
+
     );
   }
 }

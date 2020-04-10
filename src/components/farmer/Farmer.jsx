@@ -1,8 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 
+
 import './FarmerStyle.css';
-import Navbar from '../other/Home/Navbar';
+import Navbar from './farmerhomenavbar';
 import { withRouter } from 'react-router-dom';
 import Portis from '../../api/portis';
 import IPFS from '../../api/ipfs';
@@ -40,7 +41,7 @@ class Farmer extends React.Component {
   async handleSubmit(event) {
     event.preventDefault();
 
-    const address = await Portis.connectPortis();
+  /*  const address = await Portis.connectPortis();
     this.setState({
         account: address,
     })
@@ -65,7 +66,8 @@ class Farmer extends React.Component {
       .then(() => console.log('Farmer added'))
       .catch(err => {
         console.error(err);
-      });
+      });*/
+          alert('fname :'+ this.state.fname + '\nlname :' + this.state.lname + '\nidno :' + this.state.idno + '\nemail :' + this.state.email + '\ntype :' + this.state.type);
 
     this.props.history.push({
         pathname: '../farmerProfile',
@@ -80,8 +82,7 @@ class Farmer extends React.Component {
   render() {
     return (
         <div>
-        <Navbar />
-
+        <Navbar/>
       <div className="farmerLoginForm">
 
       <form onSubmit={this.handleSubmit}>
@@ -143,20 +144,6 @@ class Farmer extends React.Component {
         </label>
         <div id="cid_5" class="form-input jf-required">
           <input type="text" value={this.state.email} onChange={this.handleChange}id="input_5" name="email" data-type="input-textbox" class="form-textbox validate[required]" size="20"  placeholder=" " data-component="textbox" aria-labelledby="label_5" required="" />
-        </div>
-      </li>
-
-            <li class="form-line" data-type="control_dropdown" id="id_13">
-        <label class="form-label form-label-left form-label-auto" id="label_13" for="input_13"> TYPE OF VEGES </label>
-        <div id="cid_13" class="form-input">
-          <select value={this.state.type} onChange={this.handleChange} class="form-dropdown" id="input_13" name="q13_typeOf"  data-component="dropdown" aria-labelledby="label_13">
-
-            <option value="Dark-Green"> Dark-Green </option>
-            <option value="Red and Orange"> Red and Orange </option>
-            <option value="Starchy"> Starchy </option>
-            <option value="Beans and Peas"> Beans and Peas </option>
-            <option value="Other"> Other </option>
-          </select>
         </div>
       </li>
 
