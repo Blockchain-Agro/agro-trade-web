@@ -70,7 +70,7 @@ class Farmer extends React.Component {
           alert('fname :'+ this.state.fname + '\nlname :' + this.state.lname + '\nidno :' + this.state.idno + '\nemail :' + this.state.email + '\ntype :' + this.state.type);
 
     this.props.history.push({
-        pathname: '../farmerProfile',
+        pathname: '../farmerLoginProfile',
         state: {
             fname: this.state.fname,
             lname: this.state.lname,

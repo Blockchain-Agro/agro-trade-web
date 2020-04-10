@@ -3,8 +3,10 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 import Home from './components/other/Home/Home';
 import Farmer from './components/farmer/Farmer';
+import FarmerLoginProfile from './components/farmer/FarmerLoginProfile';
 import FarmerLogin from './components/farmer/FarmerLogin';
 import Vendor from './components/vendor/Vendor';
+import VendorLoginProfile from './components/vendor/VendorLoginProfile';
 import VendorLogin from './components/vendor/VendorLogin';
 import Productvendor from './components/vendor/Productvendor'
 import ProductInfoVendor from './components/vendor/Productinfovendor'
@@ -34,8 +36,10 @@ export default class Routes extends Component {
         <Route path="/pendingProductVendor" component={ PPendingProduct } />
         <Route path="/boughtProduct" component={ BoughtProduct } />
         <Route path="/vendorNotification" component={ VendorNotification } />
+        <Route path="/vendorLoginProfile" component={ VendorLoginProfile } />
 
         <Route path="/farmerProfile" component={ FarmerProfile } />
+        <Route path="/farmerLoginProfile" component={ FarmerLoginProfile } />
         <Route path="/farmerLogin" component={ FarmerLogin } />
         <Route path="/pendingProductFarmer" component={ PendingProduct } />
         <Route path="/soldProduct" component={ SoldProduct } />

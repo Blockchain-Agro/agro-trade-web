@@ -40,7 +40,7 @@ class Farmer extends React.Component {
     event.preventDefault();
 
     this.props.history.push({
-        pathname: '../farmerProfile'
+        pathname: '../farmerLoginProfile'
     });
   }
 

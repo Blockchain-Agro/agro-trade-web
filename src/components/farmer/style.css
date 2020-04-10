@@ -1,0 +1,40 @@
+
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  flex-direction: row;
+  text-align: center;
+  font-family: arial;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.price {
+  color: grey;
+  font-size: 22px;
+}
+
+.card button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: rgb(112, 30, 116);
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.card button:hover {
+  background-color: rgb(38, 78, 185);
+}

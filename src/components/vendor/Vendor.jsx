@@ -34,7 +34,7 @@ export default class Vendor extends React.Component {
   handleSubmit(event){
     alert('fname :'+ this.state.fname + '\nlname :' + this.state.lname + '\nidno :' + this.state.idno + '\nemail :' + this.state.email + '\ntype :' + this.state.type);
     this.props.history.push({
-        pathname: '../vendorProfile',
+        pathname: '../vendorLoginProfile',
         state: {
             fname: this.state.fname,
             lname: this.state.lname,
