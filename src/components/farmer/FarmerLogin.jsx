@@ -102,7 +102,7 @@ class Farmer extends React.Component {
 			</div>
 			</li>
 
-			
+
       <li class="form-line" data-type="control_button" id="id_12">
         <div id="cid_12" class="form-input-wide">
           <div style={{textalign:'center'}} class="form-buttons-wrapper ">

@@ -88,32 +88,23 @@ class Farmer extends React.Component {
 
     console.log('Data to db :-', data);
 
-    alert(`fname: ${this.state.fname}
-        mname: ${this.state.mname}
-        lname: ${this.state.lname}
-        email: ${this.state.email}
-        password: ${this.state.password}
-        street: ${this.state.street}
-        block: ${this.state.block}
-        city: ${this.state.city}
-        state: ${this.state.state}
-        zip: ${this.state.zip}
-        phone: ${this.state.phone}`);
-    axios
+    const status = axios
       .post('http://localhost:3001/create-farmer', data)
       .then(() => console.log('Farmer added'))
       .catch(err => {
         console.error(err);
       });
 
-    this.props.history.push({
-        pathname: '../farmerLoginProfile',
-        state: {
-            fname: this.state.fname,
-            lname: this.state.lname,
-            email: this.state.email,
-        }
-    });
+    if(status) {
+        this.props.history.push({
+            pathname: '../farmerLoginProfile',
+            state: {
+                fname: this.state.fname,
+                lname: this.state.lname,
+                email: this.state.email,
+            }
+        });
+    }
   }
 
   render() {

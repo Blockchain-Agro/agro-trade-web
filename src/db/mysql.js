@@ -10,13 +10,14 @@ function createConnection() {
   return connection;
 }
 
-function executeQuery(query) {
+async function executeQuery(query) {
   console.log('SQL query :-', query);
   const connection = createConnection();
   connection.query(query, (err, data) => {
     if(err) throw err;
     console.log('query executed successfully.');
   });
+  return true;
 }
 
 

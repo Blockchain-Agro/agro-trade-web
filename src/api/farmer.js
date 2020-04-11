@@ -37,14 +37,25 @@ app.post('/create-farmer', async function(req, res) {
   };
 
   console.log(data);
+
   // store to contract on blockchain
+
   // const ipfsHashInBytes32 = bs.getBytes32FromIpfsHash(data.ipfsHash);
   // await farmerContract.addFarmer(
   //   ipfsHashInBytes32,
   //   data.ethAddress,
   // );
 
-  // store data to db
+  // store data to farmer_login table
+  const addToLoginQuery = `INSERT INTO farmer_login(email, password)
+    values(
+      '${data.email}',
+      '${data.password}'
+    );`;
+
+  const addToLoginQueryStatus = await MySQL.executeQuery(addToLoginQuery);
+
+  // store data to farmer_info table
   const sql = `INSERT INTO farmer_info(email, eth_address,ipfs_hash,trust,
     review_count, first_name, middle_name, last_name, address, city, state, zip)
     values(
@@ -62,10 +73,11 @@ app.post('/create-farmer', async function(req, res) {
       ${data.zip}
       );`;
 
-  MySQL.executeQuery(sql);
-
-  // return success
-
+  const addToFarmerInfoQueryStatus = MySQL.executeQuery(sql);
+  if(addToLoginQueryStatus && addToFarmerInfoQueryStatus) {
+    return true;
+  }
+  return true;
 });
 
 app.listen(3001, () => {
