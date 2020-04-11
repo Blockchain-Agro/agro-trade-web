@@ -5,17 +5,17 @@ class FarmerProfile extends Component {
 
     constructor(props) {
         super(props);
-    this.state = {
-      cropname:'',
-      price:0,
-      quant : 0,
-    }
+        this.state = {
+            cropname:'',
+            price:0,
+            quant : 0,
+        }
     }
 
-          state = {
-    date: new Date(),
-  }
- 
+    state = {
+        date: new Date(),
+    }
+
 onChange = date => this.setState({ date })
 
 
@@ -44,7 +44,7 @@ onChange = date => this.setState({ date })
         </div>
       </div>
 
-      
+
       <li class="form-line jf-required" data-type="control_textbox" id="id_2">
         <label class="form-label form-label-left form-label-auto" id="label_2" for="input_2">
         PRODUCT NAME
@@ -106,7 +106,7 @@ onChange = date => this.setState({ date })
           onChange={this.onChange}
           value={this.state.date}
         />
-      </li>      
+      </li>
 
 
       <li class="form-line" data-type="control_button" id="id_12">
@@ -121,7 +121,7 @@ onChange = date => this.setState({ date })
 
     </ul>
 
-    
+
 </div>
 
       </form>

@@ -5,12 +5,13 @@ function createConnection() {
     host: "localhost",
     user: "root",
     password: "root",
-    database: "agro-trade"
+    database: "agro_trade"
   });
   return connection;
 }
 
 function executeQuery(query) {
+  console.log('SQL query :-', query);
   const connection = createConnection();
   connection.query(query, (err, data) => {
     if(err) throw err;

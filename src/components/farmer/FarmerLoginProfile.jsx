@@ -1,12 +1,8 @@
 import React from 'react';
-import axios from 'axios';
-
+import { withRouter } from 'react-router-dom';
 
 import './FarmerStyle.css';
 import Navbar from './farmerprofilenavbar';
-import { withRouter } from 'react-router-dom';
-import Portis from '../../api/portis';
-import IPFS from '../../api/ipfs';
 
 class FarmerLoginrofile extends React.Component {
 
@@ -44,7 +40,7 @@ class FarmerLoginrofile extends React.Component {
         <label class="form-label form-label-left form-label-auto" id="label_4" for="input_4">
           ID NO
           <span class="form-required">
-           
+
           </span>
         </label>
         <div id="cid_4" class="form-input jf-required">
@@ -57,7 +53,7 @@ class FarmerLoginrofile extends React.Component {
         <label class="form-label form-label-left form-label-auto" id="label_5" for="input_5">
           EMAIL
           <span class="form-required">
-            
+
           </span>
         </label>
         <div id="cid_5" class="form-input jf-required"><h5>maheshvetale999@gmail.com</h5>
@@ -68,7 +64,7 @@ class FarmerLoginrofile extends React.Component {
         <label class="form-label form-label-left form-label-auto" id="label_5" for="input_5">
           CONTACT NO.
           <span class="form-required">
-            
+
           </span>
         </label>
         <div id="cid_5" class="form-input jf-required"><h5>9920141478</h5>
@@ -79,7 +75,7 @@ class FarmerLoginrofile extends React.Component {
         <label class="form-label form-label-left form-label-auto" id="label_5" for="input_5">
           ADRESS
           <span class="form-required">
-            
+
           </span>
         </label>
         <div id="cid_5" class="form-input jf-required"><h5>501 - Shree Sidhhi, Plot No 21 , Sec 01</h5>
@@ -91,7 +87,7 @@ class FarmerLoginrofile extends React.Component {
         <label class="form-label form-label-left form-label-auto" id="label_5" for="input_5">
           CITY
           <span class="form-required">
-            
+
           </span>
         </label>
         <div id="cid_5" class="form-input jf-required"><h5>Navi Mumbai</h5>
@@ -102,7 +98,7 @@ class FarmerLoginrofile extends React.Component {
         <label class="form-label form-label-left form-label-auto" id="label_5" for="input_5">
           STATE
           <span class="form-required">
-            
+
           </span>
         </label>
         <div id="cid_5" class="form-input jf-required"><h5>Maharashtra</h5>
@@ -113,7 +109,7 @@ class FarmerLoginrofile extends React.Component {
         <label class="form-label form-label-left form-label-auto" id="label_5" for="input_5">
           ZIP
           <span class="form-required">
-            
+
           </span>
         </label>
         <div id="cid_5" class="form-input jf-required"><h5>123456</h5>

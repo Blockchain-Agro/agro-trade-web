@@ -5,9 +5,9 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
-const bs = require('../contracts/bs');
-const farmerContract = require('../contracts/farmer');
-// const MySQL = require('../db/mysql');
+// const bs = require('../contracts/bs');
+// const farmerContract = require('../contracts/farmer');
+const MySQL = require('../db/mysql');
 
 // use cors to allow cross origin resource sharing.
 app.use(
@@ -22,27 +22,47 @@ app.use(express.urlencoded({ extended: false }));
 
 app.post('/create-farmer', async function(req, res) {
   const data = {
-    ethereumAddress: req.body.dataForIpfs.ethereumAddress,
+    ethAddress: req.body.ethAddress,
     ipfsHash: req.body.ipfsHash,
-    fname: req.body.dataForIpfs.fname,
-    lname: req.body.dataForIpfs.lname,
-    mname: req.body.dataForIpfs.mname,
-    email: req.body.dataForIpfs.email,
-    address: req.body.dataForIpfs.block + " " + req.body.dataForIpfs.street,
-    city: req.body.dataForIpfs.city,
-    state: req.body.dataForIpfs.state,
-    phone:req.body.dataForIpfs.phno1 + " " + req.body.dataForIpfs.phno2,
-    zip:req.body.dataForIpfs.zip,
+    fname: req.body.fname,
+    mname: req.body.mname,
+    lname: req.body.lname,
+    email: req.body.email,
+    address: req.body.address,
+    city: req.body.city,
+    state: req.body.state,
+    phone: req.body.phone,
+    zip: req.body.zip,
     password: req.body.password,
   };
 
+  console.log(data);
   // store to contract on blockchain
-  const ipfsHashInBytes32 = bs.getBytes32FromIpfsHash(data.ipfsHash);
-  await farmerContract.addFarmer(
-    ipfsHashInBytes32,
-    data.ethereumAddress,
-  );
+  // const ipfsHashInBytes32 = bs.getBytes32FromIpfsHash(data.ipfsHash);
+  // await farmerContract.addFarmer(
+  //   ipfsHashInBytes32,
+  //   data.ethAddress,
+  // );
+
   // store data to db
+  const sql = `INSERT INTO farmer_info(email, eth_address,ipfs_hash,trust,
+    review_count, first_name, middle_name, last_name, address, city, state, zip)
+    values(
+      '${data.email}',
+      '${data.ethAddress}',
+      '${data.ipfsHash}',
+      5,
+      1,
+      '${data.fname}',
+      '${data.mname}',
+      '${data.lname}',
+      '${data.address}',
+      '${data.city}',
+      '${data.state}',
+      ${data.zip}
+      );`;
+
+  MySQL.executeQuery(sql);
 
   // return success
 

@@ -23,7 +23,8 @@ class Farmer extends React.Component {
       city:'',
       state:'',
       zip:'',
-      phone: ''
+      phone: '',
+      areaCode: '',
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -47,7 +48,7 @@ class Farmer extends React.Component {
         account: address,
     })
 
-    // post request with all the input params
+    // // post request with all the input params
     const { fname, mname, lname, email, street, block, city, state, zip, phone } = this.state;
 
     const dataForIpfs = {
@@ -64,13 +65,40 @@ class Farmer extends React.Component {
         phone,
     }
     const ipfsHash = await IPFS.getIpfsHash(dataForIpfs);
+
+    // TO DO : remove this later
+    // const ipfsHash = 'QmPmeKnFTW6DTGMHvy46tfGEoTP8QUa4ePWjZrcgxRw31n';
     console.log('IPFS hash :-', ipfsHash);
+
     const password = this.state.password;
     const data = {
-        dataForIpfs,
+        ethAddress: address,
         ipfsHash,
+        fname: this.state.fname,
+        mname: this.state.mname,
+        lname: this.state.lname,
+        email: this.state.email,
+        address: this.state.street + this.state.block,
+        city: this.state.city,
+        state: this.state.state,
+        phone: this.state.phone,
+        zip: this.state.zip,
         password,
     }
+
+    console.log('Data to db :-', data);
+
+    alert(`fname: ${this.state.fname}
+        mname: ${this.state.mname}
+        lname: ${this.state.lname}
+        email: ${this.state.email}
+        password: ${this.state.password}
+        street: ${this.state.street}
+        block: ${this.state.block}
+        city: ${this.state.city}
+        state: ${this.state.state}
+        zip: ${this.state.zip}
+        phone: ${this.state.phone}`);
     axios
       .post('http://localhost:3001/create-farmer', data)
       .then(() => console.log('Farmer added'))
@@ -98,24 +126,36 @@ class Farmer extends React.Component {
 
 			<div id="cid_1" class="form-input-wide" data-type="control_head">
 				<div class="form-header-group ">
-				<div class="header-text httal htvam">
-				<h1 id="header_1" class="form-header" data-component="header">
-				FARMER SIGN UP
-				</h1>
-				</div>
+				    <div class="header-text httal htvam">
+                        <h1 id="header_1" class="form-header" data-component="header">
+                            FARMER SIGN UP
+                        </h1>
+				    </div>
 				</div>
 			</div>
 			<ul class="form-section page-section">
 
 			<li class="form-line jf-required" data-type="control_textbox" id="id_2">
 				<label class="form-label form-label-left form-label-auto" id="label_2" for="input_2">
-				FIRST NAME
+				    FIRST NAME
+				    <span class="form-required">
+				        *
+				    </span>
+				</label>
+				<div id="cid_2" class="form-input jf-required">
+					<input type="text" value={this.state.fname} onChange={this.handleChange} id="input_2" name="fname" data-type="input-textbox" class="form-textbox validate[required]" size="20"  placeholder=" " data-component="textbox" aria-labelledby="label_2" required="" />
+				</div>
+			</li>
+
+            <li class="form-line jf-required" data-type="control_textbox" id="id_2">
+				<label class="form-label form-label-left form-label-auto" id="label_2" for="input_2">
+				MIDDLE NAME
 				<span class="form-required">
 				*
 				</span>
 				</label>
 				<div id="cid_2" class="form-input jf-required">
-					<input type="text" value={this.state.fname} onChange={this.handleChange} id="input_2" name="fname" data-type="input-textbox" class="form-textbox validate[required]" size="20"  placeholder=" " data-component="textbox" aria-labelledby="label_2" required="" />
+					<input type="text" value={this.state.mname} onChange={this.handleChange} id="input_3" name="mname" data-type="input-textbox" class="form-textbox validate[required]" size="20"  placeholder="" data-component="textbox" aria-labelledby="label_2" required="" />
 				</div>
 			</li>
 
@@ -127,12 +167,9 @@ class Farmer extends React.Component {
 				</span>
 				</label>
 			<div id="cid_3" class="form-input jf-required">
-				<input type="text" value={this.state.lname} onChange={this.handleChange} id="input_3" name="lname" data-type="input-textbox" class="form-textbox validate[required]" size="20" placeholder=" " data-component="textbox" aria-labelledby="label_3" required="" />
+				<input type="text" value={this.state.lname} onChange={this.handleChange} id="input_4" name="lname" data-type="input-textbox" class="form-textbox validate[required]" size="20" placeholder=" " data-component="textbox" aria-labelledby="label_3" required="" />
 			</div>
 			</li>
-
-
-
 
       <li class="form-line jf-required" data-type="control_textbox" id="id_5">
         <label class="form-label form-label-left form-label-auto" id="label_5" for="input_5">
@@ -142,7 +179,7 @@ class Farmer extends React.Component {
           </span>
         </label>
         <div id="cid_5" class="form-input jf-required">
-          <input type="text" value={this.state.email} onChange={this.handleChange}id="input_5" name="email" data-type="input-textbox" class="form-textbox validate[required]" size="20"  placeholder=" " data-component="textbox" aria-labelledby="label_5" required="" />
+          <input type="email" value={this.state.email} onChange={this.handleChange}id="input_5" name="email" data-type="input-textbox" class="form-textbox validate[required]" size="20"  placeholder=" " data-component="textbox" aria-labelledby="label_5" required="" />
         </div>
       </li>
 
@@ -154,24 +191,19 @@ class Farmer extends React.Component {
           </span>
         </label>
         <div id="cid_4" class="form-input jf-required">
-          <input type="text" value={this.state.password} onChange={this.handleChange} id="input_4" name="password" data-type="input-textbox" class="form-textbox validate[required]" size="20"  placeholder=" " data-component="textbox" aria-labelledby="label_4" required="" />
+          <input type="password" value={this.state.password} onChange={this.handleChange} id="input_4" name="password" data-type="input-textbox" class="form-textbox validate[required]" size="20"  placeholder=" " data-component="textbox" aria-labelledby="label_4" required="" />
         </div>
       </li>
 
 
       <li class="form-line" data-type="control_phone" id="id_11">
-        <label class="form-label form-label-left form-label-auto" id="label_11" for="input_11_area"> Phone Number </label>
+        <label class="form-label form-label-left form-label-auto" id="label_11" for="input_11_area">
+            Phone Number
+        </label>
         <div id="cid_11" class="form-input">
           <div data-wrapper-react="true">
-            <span class="form-sub-label-container " style={{verticalalign: 'top'}}>
-              <input value={this.state.phno1} onChange={this.handleChange} type="tel" id="input_11_area" name="phno1" class="form-textbox" size="6" data-component="areaCode" aria-labelledby="label_11 sublabel_11_area" />
-              <span class="phone-separate" aria-hidden="true">
-                 -
-              </span>
-              <label class="form-sub-label" for="input_11_area" id="sublabel_11_area" style={{minheight:"13px"}} aria-hidden="false"> Area Code </label>
-            </span>
             <span class="form-sub-label-container " style={{verticalalign:'top'}}>
-              <input type="tel" value={this.state.phno2} onChange={this.handleChange} id="input_11_phone" name="phno2" class="form-textbox" size="12"  data-component="phone" aria-labelledby="label_11 sublabel_11_phone" />
+              <input type="tel" value={this.state.phone} onChange={this.handleChange} id="input_11_phone" name="phone" class="form-textbox" size="20"  data-component="phone" aria-labelledby="label_11 sublabel_11_phone" />
               <label class="form-sub-label" for="input_11_phone" id="sublabel_11_phone" style={{minheight:"13px"}} aria-hidden="false"> Phone Number </label>
             </span>
           </div>
@@ -194,7 +226,7 @@ class Farmer extends React.Component {
                 <td colSpan="2">
                   <span class="form-sub-label-container " style={{verticalalign:'top'}}>
                     <input type="text" name="block" value={this.state.block} onChange={this.handleChange} class="form-textbox form-address-line" size="46"  data-component="address_line_2" aria-labelledby="label_9 sublabel_9_addr_line2" />
-                    <label class="form-sub-label" for="input_9_addr_line2" id="sublabel_9_addr_line2" style={{minheight:"13px"}} aria-hidden="false"> Box number </label>
+                    <label class="form-sub-label" for="input_9_addr_line2" id="sublabel_9_addr_line2" style={{minheight:"13px"}} aria-hidden="false"> Block number </label>
                   </span>
                 </td>
               </tr>
@@ -207,7 +239,7 @@ class Farmer extends React.Component {
                 </td>
                 <td>
                   <span class="form-sub-label-container " style={{verticalalign:'top'}}>
-                    <input type="text" name="state1" value={this.state.state1} onChange={this.handleChange} class="form-textbox form-address-state" size="22" data-component="state" aria-labelledby="label_9 sublabel_9_state" />
+                    <input type="text" name="state" value={this.state.state} onChange={this.handleChange} class="form-textbox form-address-state" size="22" data-component="state" aria-labelledby="label_9 sublabel_9_state" />
                     <label class="form-sub-label" for="input_9_state" id="sublabel_9_state" style={{minheight:"13px"}} aria-hidden="false"> State / Province </label>
                   </span>
                 </td>
