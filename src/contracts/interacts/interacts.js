@@ -1,4 +1,4 @@
-const web3 = require('../web');
+const web3 = require('../web3');
 const FarmerContract = require('../config/FarmerContract.json');
 
 async function getFarmerContractInstance() {

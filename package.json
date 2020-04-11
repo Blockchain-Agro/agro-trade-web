@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
+    "bs58": "^4.0.1",
     "cors": "^2.8.5",
     "css-loader": "^3.4.2",
     "express": "^4.17.1",

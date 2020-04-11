@@ -5,8 +5,6 @@ const getIpfsHash = async (data) => {
   const buffer = Buffer.from(JSON.stringify(data));
   const ipfsData = await ipfs.add(buffer);
 
-  console.log('ipfsHash of data :-', ipfsData[0].hash);
-
   const ipfsHash = ipfsData[0].hash;
   Promise.resolve(ipfsData);
   return ipfsHash;

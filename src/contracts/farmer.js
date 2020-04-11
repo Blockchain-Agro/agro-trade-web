@@ -1,23 +1,22 @@
-// const web3 = require('./web');
-const Utils = require('./utils');
+// const Utils = require('./utils');
 
 const interacts = require('./interacts/interacts');
 
-async function addFarmer(ipfsHash) {
-  const address = await Utils.getAccountForFarmer();
+async function addFarmer(ipfsHash, address) {
   const instance = await interacts.getFarmerContractInstance();
 
-  await instance.methods.addFarmer(ipfsHash).send({from: address});
+  const txReceipt = await instance.methods.addFarmer(ipfsHash).send({from: address});
+  return txReceipt;
 }
 
-async function getFarmer() {
-  const address = await Utils.getAccountForFarmer();
+async function getFarmer(address) {
   const instance = await interacts.getFarmerContractInstance();
-  const data = await instance.methods.getFarmer(address).call();
-  console.log('hi', data);
+  const data = await instance.methods.farmers(address).call();
+  console.log('Farmer data :-', data);
 }
 
-addFarmer('0x64EC88CA00B268E5BA1A35678A1B5316D212F4F366B2477232534A8AECA37F3C');
+// addFarmer();
+// getFarmer();
 
-getFarmer();
-module.exports.addFarmer = getFarmer;
+module.exports.addFarmer = addFarmer;
+module.exports.getFarmer = getFarmer;

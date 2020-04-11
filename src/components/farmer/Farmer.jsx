@@ -1,12 +1,12 @@
 import React from 'react';
 import axios from 'axios';
-
+import { withRouter } from 'react-router-dom';
 
 import './FarmerStyle.css';
 import Navbar from './farmerhomenavbar';
-import { withRouter } from 'react-router-dom';
-import Portis from '../../api/portis';
+// import Portis from '../../api/portis';
 import IPFS from '../../api/ipfs';
+import Utils from '../../contracts/utils';
 
 class Farmer extends React.Component {
   constructor(props) {
@@ -14,18 +14,16 @@ class Farmer extends React.Component {
     this.state = {
       account: null,
       fname:'',
+      mname: '',
       lname:'',
-      password:'',
       email:'',
-      type:'',
-      phno1:'',
-      phno2:'',
-
+      password:'',
       street:'',
       block:'',
       city:'',
-      state1:'',
+      state:'',
       zip:'',
+      phone: ''
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -41,55 +39,44 @@ class Farmer extends React.Component {
   async handleSubmit(event) {
     event.preventDefault();
 
- //   const address = await Portis.connectPortis();
-    const address = 'Qmaidjadkasdm3dmaksm'
-   
+    // const address = await Portis.connectPortis();
+    const address = await Utils.getAccountForFarmer();
+    console.log('web account address :', address);
+
     this.setState({
         account: address,
     })
 
     // post request with all the input params
-    const { fname, lname, email, block, street, city, state,phno1,phno2, zip, password } = this.state;
+    const { fname, mname, lname, email, street, block, city, state, zip, phone } = this.state;
 
     const dataForIpfs = {
         ethereumAddress: address,
         fname,
+        mname,
         lname,
         email,
-        block,
         street,
+        block,
         city,
         state,
-        phno1,
-        phno2,
         zip,
-        password,
+        phone,
     }
     const ipfsHash = await IPFS.getIpfsHash(dataForIpfs);
+    console.log('IPFS hash :-', ipfsHash);
+    const password = this.state.password;
     const data = {
-        ethereumAddress: address,
+        dataForIpfs,
         ipfsHash,
-        fname,
-        lname,
-        fname,
-        lname,
-        email,
-        block,
-        street,
-        city,
-        state,
-        phno1,
-        phno2,
-        zip,
         password,
     }
     axios
-      .post('http://localhost:3001/create', data)
+      .post('http://localhost:3001/create-farmer', data)
       .then(() => console.log('Farmer added'))
       .catch(err => {
         console.error(err);
       });
-  //        alert('fname :'+ this.state.fname + '\nlname :' + this.state.lname + '\nidno :' + this.state.idno + '\nemail :' + this.state.email + '\ntype :' + this.state.type);
 
     this.props.history.push({
         pathname: '../farmerLoginProfile',
@@ -144,7 +131,7 @@ class Farmer extends React.Component {
 			</div>
 			</li>
 
-			
+
 
 
       <li class="form-line jf-required" data-type="control_textbox" id="id_5">

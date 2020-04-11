@@ -1,4 +1,4 @@
-const web3 = require('./web');
+const web3 = require('./web3');
 
 async function getAccountForFarmer() {
   const accounts = await web3.eth.getAccounts();
