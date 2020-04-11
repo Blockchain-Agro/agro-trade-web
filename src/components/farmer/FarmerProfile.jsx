@@ -85,7 +85,7 @@ onChange = date => this.setState({ date })
 
       <li class="form-line jf-required" data-type="control_textbox" id="id_5">
         <label class="form-label form-label-left form-label-auto" id="label_5" for="input_5">
-          TOTAL QUANTITY
+          TOTAL QUANTITY in KG
           <span class="form-required">
             *
           </span>
