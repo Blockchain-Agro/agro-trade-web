@@ -14,7 +14,7 @@ class Farmer extends React.Component {
     super(props);
     this.state = {
 
-      id:'',
+      email:'',
       password:'',
 
     }
@@ -38,6 +38,21 @@ class Farmer extends React.Component {
 
   async handleSubmit(event) {
     event.preventDefault();
+    // TODO database part for checking farmer is present or not (IPFS remaining to do)
+
+    const {email, password} = this.state;
+    const data = {
+      email,
+      password,
+    }
+
+    axios
+      .post('http://localhost:3001/login', data)
+      .then(() => console.log('Farmer added'))
+      .catch(err => {
+        console.error(err);
+      });
+
 
     this.props.history.push({
         pathname: '../farmerLoginProfile'
@@ -65,13 +80,13 @@ class Farmer extends React.Component {
 
 			<li class="form-line jf-required" data-type="control_textbox" id="id_2">
 				<label class="form-label form-label-left form-label-auto" id="label_2" for="input_2">
-				ID
+				EMAIL ID
 				<span class="form-required">
 				*
 				</span>
 				</label>
 				<div id="cid_2" class="form-input jf-required">
-					<input type="text" value={this.state.id} onChange={this.handleChange} id="input_2" name="id" data-type="input-textbox" class="form-textbox validate[required]" size="20"  placeholder=" " data-component="textbox" aria-labelledby="label_2" required="" />
+					<input type="text" value={this.state.email} onChange={this.handleChange} id="input_2" name="email" data-type="input-textbox" class="form-textbox validate[required]" size="20"  placeholder=" " data-component="textbox" aria-labelledby="label_2" required="" />
 				</div>
 			</li>
 

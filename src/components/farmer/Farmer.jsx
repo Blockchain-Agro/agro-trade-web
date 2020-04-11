@@ -15,7 +15,7 @@ class Farmer extends React.Component {
       account: null,
       fname:'',
       lname:'',
-      idno:'',
+      password:'',
       email:'',
       type:'',
       phno1:'',
@@ -41,18 +41,29 @@ class Farmer extends React.Component {
   async handleSubmit(event) {
     event.preventDefault();
 
-  /*  const address = await Portis.connectPortis();
+ //   const address = await Portis.connectPortis();
+    const address = 'Qmaidjadkasdm3dmaksm'
+   
     this.setState({
         account: address,
     })
 
     // post request with all the input params
-    const { fname, lname } = this.state;
+    const { fname, lname, email, block, street, city, state,phno1,phno2, zip, password } = this.state;
 
     const dataForIpfs = {
         ethereumAddress: address,
         fname,
         lname,
+        email,
+        block,
+        street,
+        city,
+        state,
+        phno1,
+        phno2,
+        zip,
+        password,
     }
     const ipfsHash = await IPFS.getIpfsHash(dataForIpfs);
     const data = {
@@ -60,14 +71,25 @@ class Farmer extends React.Component {
         ipfsHash,
         fname,
         lname,
+        fname,
+        lname,
+        email,
+        block,
+        street,
+        city,
+        state,
+        phno1,
+        phno2,
+        zip,
+        password,
     }
     axios
       .post('http://localhost:3001/create', data)
       .then(() => console.log('Farmer added'))
       .catch(err => {
         console.error(err);
-      });*/
-          alert('fname :'+ this.state.fname + '\nlname :' + this.state.lname + '\nidno :' + this.state.idno + '\nemail :' + this.state.email + '\ntype :' + this.state.type);
+      });
+  //        alert('fname :'+ this.state.fname + '\nlname :' + this.state.lname + '\nidno :' + this.state.idno + '\nemail :' + this.state.email + '\ntype :' + this.state.type);
 
     this.props.history.push({
         pathname: '../farmerLoginProfile',
@@ -122,17 +144,7 @@ class Farmer extends React.Component {
 			</div>
 			</li>
 
-			<li class="form-line jf-required" data-type="control_textbox" id="id_4">
-        <label class="form-label form-label-left form-label-auto" id="label_4" for="input_4">
-          ID NO
-          <span class="form-required">
-            *
-          </span>
-        </label>
-        <div id="cid_4" class="form-input jf-required">
-          <input type="text" value={this.state.idno} onChange={this.handleChange} id="input_4" name="idno" data-type="input-textbox" class="form-textbox validate[required]" size="20"  placeholder=" " data-component="textbox" aria-labelledby="label_4" required="" />
-        </div>
-      </li>
+			
 
 
       <li class="form-line jf-required" data-type="control_textbox" id="id_5">
@@ -144,6 +156,18 @@ class Farmer extends React.Component {
         </label>
         <div id="cid_5" class="form-input jf-required">
           <input type="text" value={this.state.email} onChange={this.handleChange}id="input_5" name="email" data-type="input-textbox" class="form-textbox validate[required]" size="20"  placeholder=" " data-component="textbox" aria-labelledby="label_5" required="" />
+        </div>
+      </li>
+
+      <li class="form-line jf-required" data-type="control_textbox" id="id_4">
+        <label class="form-label form-label-left form-label-auto" id="label_4" for="input_4">
+          Password
+          <span class="form-required">
+            *
+          </span>
+        </label>
+        <div id="cid_4" class="form-input jf-required">
+          <input type="text" value={this.state.password} onChange={this.handleChange} id="input_4" name="password" data-type="input-textbox" class="form-textbox validate[required]" size="20"  placeholder=" " data-component="textbox" aria-labelledby="label_4" required="" />
         </div>
       </li>
 
