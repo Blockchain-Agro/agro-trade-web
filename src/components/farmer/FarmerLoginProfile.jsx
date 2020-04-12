@@ -6,7 +6,13 @@ import Navbar from './farmerprofilenavbar';
 
 class FarmerLoginrofile extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = this.props.location.state;
+    }
+
   render() {
+    console.log(this.state);
     return (
         <div>
         <Navbar/>
@@ -27,15 +33,14 @@ class FarmerLoginrofile extends React.Component {
 
       <li class="form-line jf-required" data-type="control_textbox" id="id_2">
         <label class="form-label form-label-left form-label-auto" id="label_2" for="input_2">
-        NAME
+        FIRST NAME
         <span class="form-required">
         </span>
         </label>
         <div id="cid_2" class="form-input jf-required">
-          <h5>Mahesh Vetale</h5>
+            <h5>{this.state.fname}</h5>
         </div>
       </li>
-
       <li class="form-line jf-required" data-type="control_textbox" id="id_4">
         <label class="form-label form-label-left form-label-auto" id="label_4" for="input_4">
           ID NO

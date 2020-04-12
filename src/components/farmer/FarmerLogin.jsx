@@ -49,12 +49,13 @@ class Farmer extends React.Component {
     console.log('login status response :-', response.data);
     if(response.data.status) {
         const farmerData = response.data.farmerData[0];
+        console.log('farmer data :-', farmerData);
         this.props.history.push({
             pathname: '../farmerLoginProfile',
             state: {
-                fname: farmerData.fname,
-                mname: farmerData.mname,
-                lname: farmerData.lname,
+                fname: farmerData.first_name,
+                mname: farmerData.middle_name,
+                lname: farmerData.last_name,
                 email: farmerData.email,
                 ethAddress: farmerData.eth_address,
                 ipfsHash: farmerData.ipfs_hash,
