@@ -89,13 +89,25 @@ app.post('/farmer-login', async function(req, res) {
     password: req.body.password,
   }
   const sql = `SELECT id FROM farmer_login WHERE email='${data.email}' and password='${data.password}';`;
-  const fetchLoginData = await MySQL.isRegisteredFarmer(sql);
+  const fetchLoginDataStatus = await MySQL.isRegisteredFarmer(sql);
+  console.log('Fetch login data :-', fetchLoginDataStatus);
+
   let fetchQueryData;
-  if(fetchLoginData) {
+  let responseData;
+  if(fetchLoginDataStatus) {
     const fetchQuery = `SELECT * FROM farmer_info where email='${data.email}';`;
     fetchQueryData = await MySQL.getData(fetchQuery);
-  } else {}
-  res.end(JSON.stringify(fetchQueryData));
+    responseData = {
+      status: fetchLoginDataStatus,
+      farmerData: fetchQueryData,
+    }
+    res.end(JSON.stringify(responseData));
+  } else {
+    responseData = {
+      status: fetchLoginDataStatus,
+    }
+    res.end(JSON.stringify(responseData));
+  }
 });
 
 

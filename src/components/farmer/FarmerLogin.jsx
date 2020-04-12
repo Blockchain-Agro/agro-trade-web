@@ -6,7 +6,7 @@ import './FarmerStyle.css';
 import Navbar from './farmerhomenavbar';
 import { withRouter } from 'react-router-dom';
 
-// const SERVER_ADDRESS = 'http://localhost:3001';
+const SERVER_ADDRESS = 'http://localhost:3001';
 
 class Farmer extends React.Component {
   constructor(props) {
@@ -45,26 +45,33 @@ class Farmer extends React.Component {
       password,
     }
 
-    const loginStatusResponse = await axios.post('http://localhost:3001/farmer-login', data);
-    console.log('login status response :-', loginStatusResponse.data[0]);
-    this.props.history.push({
-        pathname: '../farmerLoginProfile',
-        state: {
-            fname: loginStatusResponse.data[0].fname,
-            mname: loginStatusResponse.data[0].mname,
-            lname: loginStatusResponse.data[0].lname,
-            email: loginStatusResponse.data[0].email,
-            ethAddress: loginStatusResponse.data[0].eth_address,
-            ipfsHash: loginStatusResponse.data[0].ipfs_hash,
-            trust: loginStatusResponse.data[0].trust,
-            reviewCount: loginStatusResponse.data[0].review_count,
-            address: loginStatusResponse.data[0].address,
-            city: loginStatusResponse.data[0].city,
-            state: loginStatusResponse.data[0].email.state,
-            zip: loginStatusResponse.data[0].zip,
-            phone: loginStatusResponse.data[0].phone,
-        }
-    });
+    const response = await axios.post(SERVER_ADDRESS + '/farmer-login', data);
+    console.log('login status response :-', response.data);
+    if(response.data.status) {
+        const farmerData = response.data.farmerData[0];
+        this.props.history.push({
+            pathname: '../farmerLoginProfile',
+            state: {
+                fname: farmerData.fname,
+                mname: farmerData.mname,
+                lname: farmerData.lname,
+                email: farmerData.email,
+                ethAddress: farmerData.eth_address,
+                ipfsHash: farmerData.ipfs_hash,
+                trust: farmerData.trust,
+                reviewCount: farmerData.review_count,
+                address: farmerData.address,
+                city: farmerData.city,
+                state: farmerData.email.state,
+                zip: farmerData.zip,
+                phone: farmerData.phone,
+            }
+        });
+    }
+    if(!response.data.status) {
+        alert('Invalid Credentials..');
+    }
+
   }
 
   render() {
