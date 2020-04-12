@@ -1,13 +1,12 @@
 import React from 'react';
 import axios from 'axios';
-import { Button} from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 import './FarmerStyle.css';
 import Navbar from './farmerhomenavbar';
 import { withRouter } from 'react-router-dom';
-import Portis from '../../api/portis';
-import IPFS from '../../api/ipfs';
+
+// const SERVER_ADDRESS = 'http://localhost:3001';
 
 class Farmer extends React.Component {
   constructor(props) {
@@ -30,32 +29,41 @@ class Farmer extends React.Component {
     });
   }
 
-  handleChange(e) {
-    let change = {}
-    change[e.target.name] = e.target.value
-    this.setState(change)
-}
+    handleChange(e) {
+        let change = {}
+        change[e.target.name] = e.target.value
+        this.setState(change)
+    }
 
   async handleSubmit(event) {
     event.preventDefault();
     // TODO database part for checking farmer is present or not (IPFS remaining to do)
 
-    const {email, password} = this.state;
+    const { email, password } = this.state;
     const data = {
       email,
       password,
     }
 
-    axios
-      .post('http://localhost:3001/login', data)
-      .then(() => console.log('Farmer added'))
-      .catch(err => {
-        console.error(err);
-      });
-
-
+    const loginStatusResponse = await axios.post('http://localhost:3001/farmer-login', data);
+    console.log('login status response :-', loginStatusResponse.data[0]);
     this.props.history.push({
-        pathname: '../farmerLoginProfile'
+        pathname: '../farmerLoginProfile',
+        state: {
+            fname: loginStatusResponse.data[0].fname,
+            mname: loginStatusResponse.data[0].mname,
+            lname: loginStatusResponse.data[0].lname,
+            email: loginStatusResponse.data[0].email,
+            ethAddress: loginStatusResponse.data[0].eth_address,
+            ipfsHash: loginStatusResponse.data[0].ipfs_hash,
+            trust: loginStatusResponse.data[0].trust,
+            reviewCount: loginStatusResponse.data[0].review_count,
+            address: loginStatusResponse.data[0].address,
+            city: loginStatusResponse.data[0].city,
+            state: loginStatusResponse.data[0].email.state,
+            zip: loginStatusResponse.data[0].zip,
+            phone: loginStatusResponse.data[0].phone,
+        }
     });
   }
 

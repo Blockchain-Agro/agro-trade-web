@@ -4,6 +4,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const bodyParser = require('body-parser')
 
 // const bs = require('../contracts/bs');
 // const farmerContract = require('../contracts/farmer');
@@ -19,6 +20,8 @@ app.use(
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.post('/create-farmer', async function(req, res) {
   const data = {
@@ -80,8 +83,30 @@ app.post('/create-farmer', async function(req, res) {
   return true;
 });
 
+app.post('/farmer-login', async function(req, res) {
+  const data = {
+    email: req.body.email,
+    password: req.body.password,
+  }
+  const sql = `SELECT id FROM farmer_login WHERE email='${data.email}' and password='${data.password}';`;
+  const fetchLoginData = await MySQL.isRegisteredFarmer(sql);
+  let fetchQueryData;
+  if(fetchLoginData) {
+    const fetchQuery = `SELECT * FROM farmer_info where email='${data.email}';`;
+    fetchQueryData = await MySQL.getData(fetchQuery);
+  } else {}
+  res.end(JSON.stringify(fetchQueryData));
+});
+
+
+// NOTE: not used now.
+app.get('/farmer-signup-data', async function(req, res) {
+  const sql = `SELECT * FROM farmer_info WHERE email='rajat@hotmail.com';`;
+  const fetchedData = await MySQL.getData(sql);
+  console.log('Fetched data :-',fetchedData);
+  res.end(JSON.stringify(JSON.stringify(fetchedData)));
+});
+
 app.listen(3001, () => {
   console.log('Server Listening on port 3001');
 });
-
-// create /login post req for login part corresponding changes are already made in FarmerLogin.jsx(check handle submit)
