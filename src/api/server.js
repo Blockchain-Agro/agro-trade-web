@@ -4,7 +4,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 
 // const bs = require('../contracts/bs');
 // const farmerContract = require('../contracts/farmer');
@@ -20,8 +20,8 @@ app.use(
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post('/create-farmer', async function(req, res) {
   const data = {
@@ -109,7 +109,6 @@ app.post('/farmer-login', async function(req, res) {
     res.end(JSON.stringify(responseData));
   }
 });
-
 
 // NOTE: not used now.
 app.get('/farmer-signup-data', async function(req, res) {
