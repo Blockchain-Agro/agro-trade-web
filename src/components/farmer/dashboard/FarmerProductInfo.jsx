@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Card, CardText, CardBody, Button,
   CardTitle, CardSubtitle } from 'reactstrap';
-import './style.css'
-import Navbar from './farmerprofilenavbar';
+import './../style.css'
+import Navbar from '../farmerProfileNavbar';
 
 class FarmerProductInfo extends Component {
   constructor(props) {

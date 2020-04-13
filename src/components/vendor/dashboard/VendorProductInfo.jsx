@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Card, CardText, CardBody, Button,
   CardTitle, CardSubtitle } from 'reactstrap';
-import './style.css'
-import Navbar from './vendorprofilenavbar';
+import './../style.css'
+import Navbar from '../vendorProfileNavbar';
 
 class VendorProductInfo extends Component {
   constructor(props) {

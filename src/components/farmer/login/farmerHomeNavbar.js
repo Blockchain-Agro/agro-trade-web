@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './NavStyle.scss'
+import './../NavStyle.scss'
 import { Button} from 'reactstrap';
 
 export default class Navbar extends React.Component {
@@ -18,7 +18,7 @@ export default class Navbar extends React.Component {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
               <li className="nav-item active">
-                <Link to="/" className="nav-link">Farmer Login</Link>
+                <Link to="/" className="nav-link">Home</Link>
               </li>
             </ul>
           </div>

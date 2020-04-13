@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Row, Col } from 'reactstrap';
-import Card from './Card';
-import Navbar from './vendorprofilenavbar';
+import Card from '../Card';
+import Navbar from '../vendorProfileNavbar';
 
 class VendorProfile extends Component {
   constructor() {

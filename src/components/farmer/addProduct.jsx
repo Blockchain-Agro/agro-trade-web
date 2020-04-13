@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Navbar from './farmerprofilenavbar';
+import Navbar from './farmerProfileNavbar';
 import Calendar from 'react-calendar';
 class FarmerProfile extends Component {
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Navbar from './vendorprofilenavbar';
-import './NavStyle.scss'
+import Navbar from '../vendorProfileNavbar';
+import './../NavStyle.scss'
 import { Container, Row, Col } from 'reactstrap';
-import Card from './Card';
+import Card from '../Card';
 
 import { Button} from 'reactstrap';
 

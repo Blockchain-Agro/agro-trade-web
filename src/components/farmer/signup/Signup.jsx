@@ -2,13 +2,13 @@ import React from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 
-import './FarmerStyle.css';
-import Navbar from './farmerhomenavbar';
+import './../FarmerStyle.css';
+import Navbar from './../FarmarNavbar';
 // import Portis from '../../api/portis';
-import IPFS from '../../api/ipfs';
-import Utils from '../../contracts/utils';
+import IPFS from '../../../api/ipfs';
+import Utils from '../../../contracts/utils';
 
-class Farmer extends React.Component {
+class Signup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -263,4 +263,4 @@ class Farmer extends React.Component {
   }
 }
 
-export default withRouter(Farmer);
+export default withRouter(Signup);

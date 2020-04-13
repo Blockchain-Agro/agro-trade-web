@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // import { Card, CardImg, CardText, CardBody,
 //   CardTitle, CardSubtitle } from 'reactstrap';
 
-class Productinfovendor extends Component {
+class ProductInfoVendor extends Component {
   render () {
 
     return (
@@ -13,4 +13,4 @@ class Productinfovendor extends Component {
   }
 }
 
-export default Productinfovendor;
+export default ProductInfoVendor;

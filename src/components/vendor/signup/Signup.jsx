@@ -1,8 +1,8 @@
 import React from 'react';
-import './VendorStyle.css';
-import Navbar from './vendorhomenavbar';
+import './../VendorStyle.css';
+import Navbar from '../vendorHomeNavbar';
 
-export default class Vendor extends React.Component {
+export default class Signup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

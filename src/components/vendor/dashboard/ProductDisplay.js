@@ -1,16 +1,12 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Navbar from './vendorprofilenavbar';
-import './NavStyle.scss'
+import React, { Component } from 'react';
 import { Container, Row, Col } from 'reactstrap';
-import Card from './Card';
+import Card from '../Card';
 
-import { Button} from 'reactstrap';
 
-export default class PendingProduct extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
+class ProductDisplay extends Component {
+  constructor() {
+    super();
+    this.state = {
       people: [
 
         {
@@ -26,58 +22,79 @@ export default class PendingProduct extends React.Component {
     price_per_kg: "28",
     quantity_in_kg: "50",
     expiry_date: "20/02/2020"
-  }
-  ,
-            {
-    product_name: "Wheat",
-    type_crop: "starchy",
-    price_per_kg: "28",
-    quantity_in_kg: "50",
-    expiry_date: "20/02/2020"
-  },            {
-    product_name: "Wheat",
-    type_crop: "starchy",
-    price_per_kg: "28",
-    quantity_in_kg: "50",
-    expiry_date: "20/02/2020"
-  },            {
+  },
+          {
     product_name: "Wheat",
     type_crop: "starchy",
     price_per_kg: "28",
     quantity_in_kg: "50",
     expiry_date: "20/02/2020"
   },
-            {
-    product_name: "Bajra",
+          {
+    product_name: "Wheat",
+    type_crop: "starchy",
+    price_per_kg: "28",
+    quantity_in_kg: "50",
+    expiry_date: "20/02/2020"
+  },
+          {
+    product_name: "Wheat",
+    type_crop: "starchy",
+    price_per_kg: "28",
+    quantity_in_kg: "50",
+    expiry_date: "20/02/2020"
+  },
+          {
+    product_name: "Wheat",
+    type_crop: "starchy",
+    price_per_kg: "28",
+    quantity_in_kg: "50",
+    expiry_date: "20/02/2020"
+  },
+          {
+    product_name: "Wheat",
+    type_crop: "starchy",
+    price_per_kg: "28",
+    quantity_in_kg: "50",
+    expiry_date: "20/02/2020"
+  },
+          {
+    product_name: "Wheat",
+    type_crop: "starchy",
+    price_per_kg: "28",
+    quantity_in_kg: "50",
+    expiry_date: "20/02/2020"
+  },
+          {
+    product_name: "Wheat",
     type_crop: "starchy",
     price_per_kg: "28",
     quantity_in_kg: "50",
     expiry_date: "20/02/2020"
   }
-   ]
-    }
-    }
 
-  render (){
 
+      ]
+    }
+  }
+
+
+  render () {
     let peopleCards = this.state.people.map(person => {
-      return(
+      return (
         <Col sm="4">
           <Card history= {this.props.history} person={person} />
         </Col>
-      );
+      )
     })
-
-    return(
-        <div>
-    <Navbar/>
-    
+    return (
       <Container fluid>
         <Row>
           {peopleCards}
         </Row>
       </Container>
-    </div>
     )
   }
 }
+
+export default ProductDisplay;
