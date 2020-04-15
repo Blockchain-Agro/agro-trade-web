@@ -119,40 +119,37 @@ app.get('/farmer-signup-data', async function(req, res) {
 });
 
 app.post('/add-product', async function(req, res) {
-  console.log("insode add-product");
-
   const data = {
-    farmer_address:req.body.farmerAddress,
-    eth_id:req.body.eth_id,
-    ipfs_hash:req.body.ipfsHash,
-    name:req.body.name,
-    price:req.body.price,
-    quantity:req.body.quant,
-    type:req.body.type
+    farmer_address: req.body.farmerAddress,
+    eth_id: req.body.eth_id,
+    ipfs_hash: req.body.ipfsHash,
+    name: req.body.productName,
+    price: req.body.price,
+    quantity: req.body.quant,
+    type: req.body.type
   }
-  const sql = `INSERT INTO product_info (farmer_address,eth_id,ipfs_hash,name,price,quantity,type) values(
-    '${data.farmer_address}',
-    '${data.eth_id}',
-    '${data.ipfs_hash}',
-    '${data.name}',
-    '${data.price}',
-    '${data.quantity}',
-    '${data.type}'
-    );'`;
-  
-    console.log("\n\nQuery :\n" + sql + "\n");
-    const addProduct = MySQL.executeQuery(sql);
-    console.log("Adding status :" + addProduct);
-    if(addProduct) {
-      return true;
-    }
-    return false;
-  
+
+  console.log('data :-', data);
+  // const sql = `INSERT INTO product_info (farmer_address,eth_id,ipfs_hash,name,price,quantity,type) values(
+  //   '${data.farmer_address}',
+  //   '${data.eth_id}',
+  //   '${data.ipfs_hash}',
+  //   '${data.name}',
+  //   '${data.price}',
+  //   '${data.quantity}',
+  //   '${data.type}'
+  //   );'`;
+
+  //   console.log("\n\nQuery :\n" + sql + "\n");
+  //   const addProduct = MySQL.executeQuery(sql);
+  //   console.log("Adding status :" + addProduct);
+  //   if(addProduct) {
+  //     return true;
+  //   }
+  //   return false;
 });
 
 
 app.listen(3001, () => {
   console.log('Server Listening on port 3001');
 });
-
-

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Navbar from './farmerProfileNavbar';
-import Calendar from 'react-calendar';
+// import Calendar from 'react-calendar';
 import IPFS from '../../api/ipfs';
 import axios from 'axios';
 
@@ -12,7 +12,7 @@ class FarmerProfile extends Component {
         this.state = {
             info:JSON.parse(sessionStorage.user),
             id: this.props.location.id,
-            productname:'',
+            productName:'',
             price:0,
             type:'',
             quant : 0,
@@ -38,58 +38,41 @@ class FarmerProfile extends Component {
 onChange = date => this.setState({ date })
 
 
-async handleSubmit(event){
-    console.log("control insode");
-    alert("HELLO");
-    const {name, price, quant, type} = this.state;
-    const dataForIpfs = {
-      name,
-      price,
-      quant,
-      type,
-      // TODO remove this later
-      farmerAddress:this.state.info.ethAddress,
-      eth_id:'Count',
-      status:0,
+    async handleSubmit(event){
+        event.preventDefault();
+
+        console.log("control insode");
+        const { productName, price, quant, type, status } = this.state;
+        const dataForIpfs = {
+            productName,
+            price,
+            quant,
+            type: 'Fruit',
+            // TODO remove this later
+            farmerAddress: this.state.info.ethAddress,
+            eth_id: 4,
+            status: 0,
+        }
+        const ipfsHash = await IPFS.getIpfsHash(dataForIpfs);
+        console.log('IPFS hash :-', ipfsHash);
+
+        const data = {
+            productName,
+            price,
+            quant,
+            type: 'Fruit',
+            ipfsHash,
+            farmerAddress: this.state.info.ethAddress,
+            // TODO remove this later
+            eth_id: 4,
+            status: 0,
+        }
+
+        console.log('Data to db :-', data);
+
+        const response = await axios.post('http://localhost:3001/add-product', data);
+        console.log('add-product status :-', response);
     }
-    const ipfsHash = await IPFS.getIpfsHash(dataForIpfs);
-
-    alert('IPFS hash :-', ipfsHash);
-
-    const data = {
-      name,
-      price,
-      quant,
-      type,
-      ipfsHash,
-      farmerAddress:this.state.info.ethAddress,
-      // TODO remove this later
-      eth_id:'Count',
-      status:0,
-    }
-
-    console.log('Data to db :-', data);
-
-    const status = axios
-      .post('http://localhost:3001/add-product', data)
-      .then(() => console.log('Product added'))
-      .catch(err => {
-        console.error(err);
-      });
-
-      if(status) {
-        alert("Product is added!");
-        this.props.history.push({
-            pathname: '../farmerLoginProfile',
-            state: {
-                fname: this.state.fname,
-                lname: this.state.lname,
-                email: this.state.email,
-            }
-        });
-    }
-
-}
 
   render () {
     return (
@@ -125,7 +108,7 @@ async handleSubmit(event){
         </span>
         </label>
         <div id="cid_2" class="form-input jf-required">
-          <input type="text" value={this.state.productname} onChange={this.handleChange} id="input_2" name="productname" data-type="input-textbox" class="form-textbox validate[required]" size="20"  placeholder=" " data-component="textbox" aria-labelledby="label_2" required="" />
+          <input type="text" value={this.state.productName} onChange={this.handleChange} id="input_2" name="productName" data-type="input-textbox" class="form-textbox validate[required]" size="20"  placeholder=" " data-component="textbox" aria-labelledby="label_2" required="" />
         </div>
       </li>
             <li class="form-line" data-type="control_dropdown" id="id_13">
@@ -167,7 +150,7 @@ async handleSubmit(event){
         </div>
       </li>
 
-      
+
 
 
       <li class="form-line" data-type="control_button" id="id_12">
