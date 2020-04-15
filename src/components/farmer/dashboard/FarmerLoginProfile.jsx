@@ -15,7 +15,7 @@ class FarmerLoginrofile extends React.Component {
     console.log(this.state);
     return (
         <div>
-        <Navbar id = {this.state.email}/>
+        <Navbar id = {JSON.parse(sessionStorage.user).email}/>
        
      <div className="farmerLoginForm">
 

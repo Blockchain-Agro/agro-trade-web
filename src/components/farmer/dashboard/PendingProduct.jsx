@@ -1,11 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Navbar from '../farmerProfileNavbar';
 import './../NavStyle.scss'
 import { Container, Row, Col } from 'reactstrap';
 import Card from './CardFarmerNotification';
 
-import { Button} from 'reactstrap';
 
 // NO BUTTON
 

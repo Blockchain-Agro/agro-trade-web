@@ -42,7 +42,7 @@ export default class FarmerNotification extends React.Component {
     return(
         <div>
     <Navbar id = {this.state.id}/>
-    {this.state.id}
+    {JSON.parse(sessionStorage.user).email}
       <Container fluid>
         <Row>
           {peopleCards}

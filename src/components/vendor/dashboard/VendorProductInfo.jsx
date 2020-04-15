@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Card, CardText, CardBody, Button,
-  CardTitle, CardSubtitle } from 'reactstrap';
 import './../style.css'
 import Navbar from '../vendorProfileNavbar';
 

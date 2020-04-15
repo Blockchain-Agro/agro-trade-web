@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardText, CardBody, Button,
-  CardTitle, CardSubtitle } from 'reactstrap';
+import { Button } from 'reactstrap';
 import './../style.css'
 import Navbar from './../farmerProfileNavbar';
 

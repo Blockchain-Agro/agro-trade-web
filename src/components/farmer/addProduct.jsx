@@ -1,24 +1,95 @@
 import React, { Component } from 'react';
 import Navbar from './farmerProfileNavbar';
 import Calendar from 'react-calendar';
+import IPFS from '../../api/ipfs';
+import axios from 'axios';
+
+// ETH AD
 class FarmerProfile extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            info:JSON.parse(sessionStorage.user),
             id: this.props.location.id,
-            cropname:'',
+            productname:'',
             price:0,
+            type:'',
             quant : 0,
         }
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     state = {
         date: new Date(),
     }
 
+    state = {
+
+    }
+
+    handleChange(e) {
+      let change = {}
+      change[e.target.name] = e.target.value
+      this.setState(change)
+  }
+
 onChange = date => this.setState({ date })
 
+
+async handleSubmit(event){
+    console.log("control insode");
+    alert("HELLO");
+    const {name, price, quant, type} = this.state;
+    const dataForIpfs = {
+      name,
+      price,
+      quant,
+      type,
+      // TODO remove this later
+      farmerAddress:this.state.info.ethAddress,
+      eth_id:'Count',
+      status:0,
+    }
+    const ipfsHash = await IPFS.getIpfsHash(dataForIpfs);
+
+    alert('IPFS hash :-', ipfsHash);
+
+    const data = {
+      name,
+      price,
+      quant,
+      type,
+      ipfsHash,
+      farmerAddress:this.state.info.ethAddress,
+      // TODO remove this later
+      eth_id:'Count',
+      status:0,
+    }
+
+    console.log('Data to db :-', data);
+
+    const status = axios
+      .post('http://localhost:3001/add-product', data)
+      .then(() => console.log('Product added'))
+      .catch(err => {
+        console.error(err);
+      });
+
+      if(status) {
+        alert("Product is added!");
+        this.props.history.push({
+            pathname: '../farmerLoginProfile',
+            state: {
+                fname: this.state.fname,
+                lname: this.state.lname,
+                email: this.state.email,
+            }
+        });
+    }
+
+}
 
   render () {
     return (
@@ -26,7 +97,7 @@ onChange = date => this.setState({ date })
         <div>
 
             <Navbar id = {this.state.id}/>
-            {this.state.id}
+            {JSON.parse(sessionStorage.user).email}
                  <form onSubmit={this.handleSubmit} class="jotform-form">
 
             <input type="hidden" name="formID" value="200412672853451" />
@@ -60,7 +131,7 @@ onChange = date => this.setState({ date })
             <li class="form-line" data-type="control_dropdown" id="id_13">
         <label class="form-label form-label-left form-label-auto" id="label_13" for="input_13"> TYPE OF CROP </label>
         <div id="cid_13" class="form-input">
-          <select class="form-dropdown" id="input_13" name="q13_typeOf"  data-component="dropdown" aria-labelledby="label_13">
+          <select class="form-dropdown" id="input_13" name="type"  data-component="dropdown" aria-labelledby="label_13">
             <option value="">  </option>
             <option value="Fruit"> Fruit </option>
             <option value="Green"> Green </option>
@@ -96,18 +167,7 @@ onChange = date => this.setState({ date })
         </div>
       </li>
 
-      <li class="form-line jf-required" data-type="control_textbox" id="id_5">
-        <label class="form-label form-label-left form-label-auto" id="label_5" for="input_5" style={{marginRight:'30px'}}>
-          EXPECTED EXPIRAY DATE
-          <span class="form-required">
-            *
-          </span>
-        </label>
-        <Calendar style={{marginLeft:'30px', paddingLeft:'30px'}}
-          onChange={this.onChange}
-          value={this.state.date}
-        />
-      </li>
+      
 
 
       <li class="form-line" data-type="control_button" id="id_12">
@@ -133,3 +193,23 @@ onChange = date => this.setState({ date })
 }
 
 export default FarmerProfile;
+
+
+/*
+
+
+<li class="form-line jf-required" data-type="control_textbox" id="id_5">
+        <label class="form-label form-label-left form-label-auto" id="label_5" for="input_5" style={{marginRight:'30px'}}>
+          EXPECTED EXPIRAY DATE
+          <span class="form-required">
+            *
+          </span>
+        </label>
+        <Calendar style={{marginLeft:'30px', paddingLeft:'30px'}}
+          onChange={this.onChange}
+          value={this.state.date}
+        />
+      </li>
+
+
+*/

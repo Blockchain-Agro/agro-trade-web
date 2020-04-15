@@ -47,9 +47,33 @@ class Farmer extends React.Component {
 
     const response = await axios.post(SERVER_ADDRESS + '/farmer-login', data);
     console.log('login status response :-', response.data);
+    
+
     if(response.data.status) {
         const farmerData = response.data.farmerData[0];
         console.log('farmer data :-', farmerData);
+
+        const temp = 
+    {
+      fname: farmerData.first_name,
+      mname: farmerData.middle_name,
+      lname: farmerData.last_name,
+      email: farmerData.email,
+      ethAddress: farmerData.eth_address,
+      ipfsHash: farmerData.ipfs_hash,
+      trust: farmerData.trust,
+      reviewCount: farmerData.review_count,
+      address: farmerData.address,
+      city: farmerData.city,
+      state: farmerData.email.state,
+      zip: farmerData.zip,
+      phone: farmerData.phone,
+  }
+
+
+    sessionStorage.user = JSON.stringify(temp);
+    console.log("Data Added to session\n");
+
         this.props.history.push({
             pathname: '../farmerLoginProfile',
             state: {
