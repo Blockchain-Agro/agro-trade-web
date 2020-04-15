@@ -15,7 +15,8 @@ class FarmerLoginrofile extends React.Component {
     console.log(this.state);
     return (
         <div>
-        <Navbar/>
+        <Navbar id = {this.state.email}/>
+       
      <div className="farmerLoginForm">
 
       <form onSubmit={this.handleSubmit}>

@@ -15,12 +15,14 @@ import VendorPendingProduct from './components/vendor/dashboard/PendingProduct';
 import BoughtProduct from './components/vendor/dashboard/BoughtProduct';
 import VendorNotification from './components/vendor/dashboard/VendorNotification';
 import SoldProduct from './components/farmer/dashboard/SoldProduct';
-import FarmerNotification from './components/farmer/dashboard/SoldProduct';
+import FarmerNotification from './components/farmer/dashboard/FarmerNotification';
 import AddProduct from './components/farmer/addProduct';
 import FarmerProductInfo from './components/farmer/dashboard/FarmerProductInfo';
 import VendorProductInfo from './components/vendor/dashboard/VendorProductInfo';
 import VendorProfile from './components/vendor/dashboard/VendorProfile';
-
+// import FarmerProductInfoSoldProduct from './components/farmer/cardInnerPages/';
+import FarmerProductInfoNotification from './components/farmer/dashboard/ProductInfoNotification';
+//   <Route path="/farmerProductInfoSoldProduct" component={ FarmerProductInfoSoldProduct } />
 
 export default class Routes extends Component {
   render () {
@@ -29,7 +31,9 @@ export default class Routes extends Component {
 
         <Route exact path="/" component={ Home } />
         <Route path="/farmer" component={ FarmerSignUp } />
-
+      
+        <Route path="/productInfoNotification" component={ FarmerProductInfoNotification } />
+        
         <Route path="/vendor" component={ VendorSignup } />
         <Route path="/productvendor" component={ ProductDisplay }/>
         <Route path="/vendorProfile" component={ VendorProfile } />

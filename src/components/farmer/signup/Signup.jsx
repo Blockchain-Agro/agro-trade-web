@@ -39,7 +39,7 @@ class Signup extends React.Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-
+    console.log('inside handle submit')
     // const address = await Portis.connectPortis();
     const address = await Utils.getAccountForFarmer();
     console.log('web account address :', address);
@@ -248,7 +248,7 @@ class Signup extends React.Component {
       <li class="form-line" data-type="control_button" id="id_12">
         <div id="cid_12" class="form-input-wide">
           <div style={{textalign:'center'}} class="form-buttons-wrapper ">
-            <button id="input_12" type="submit" class="form-submit-button" data-component="button" data-content="">
+            <button id="input_12"  type="submit" class="form-submit-button" data-component="button" data-content="">
               Submit
             </button>
           </div>

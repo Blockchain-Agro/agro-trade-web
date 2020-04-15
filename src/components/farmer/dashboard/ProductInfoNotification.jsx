@@ -2,18 +2,21 @@ import React, { Component } from 'react';
 import { Card, CardText, CardBody, Button,
   CardTitle, CardSubtitle } from 'reactstrap';
 import './../style.css'
-import Navbar from '../farmerProfileNavbar';
+import Navbar from './../farmerProfileNavbar';
 
 class FarmerProductInfo extends Component {
   constructor(props) {
     super(props);
             this.state = {
-            
+            id: this.props.location.state.id,
             product_name: this.props.location.state.product_name,
             type_crop:this.props.location.state.type_crop,
             price_per_kg:this.props.location.state.price_per_kg,
             quantity_in_kg:this.props.location.state.quantity_in_kg,
-            expiry_date:this.props.location.state.expiry_date
+            expiry_date:this.props.location.state.expiry_date,
+            vendor_contact:this.props.location.state.vendor_contact,  
+            vendor_name:this.props.location.state.vendor_name                  
+          
         }
   }
 
@@ -22,7 +25,7 @@ class FarmerProductInfo extends Component {
     return (
         <div>
 
-            <Navbar />
+            <Navbar id={this.state.id}/>
 
                  <form onSubmit={this.handleSubmit} class="jotform-form">
 
@@ -97,11 +100,37 @@ class FarmerProductInfo extends Component {
           <h5>{this.state.expiry_date}</h5>
         </div>
       </li>
+
+                  <li class="form-line jf-required" data-type="control_textbox" id="id_2">
+        <label class="form-label form-label-left form-label-auto" id="label_2" for="input_2">
+        VENDOR NAME
+        <span class="form-required">
+        </span>
+        </label>
+        <div id="cid_2" class="form-input jf-required">
+          <h5>{this.state.vendor_name}</h5>
+        </div>
+      </li>
+
+                  <li class="form-line jf-required" data-type="control_textbox" id="id_2">
+        <label class="form-label form-label-left form-label-auto" id="label_2" for="input_2">
+        VENDOR CONTACT
+        <span class="form-required">
+        </span>
+        </label>
+        <div id="cid_2" class="form-input jf-required">
+          <h5>{this.state.vendor_contact}</h5>
+        </div>
+      </li>
             
 
     </ul>
 
     
+</div>
+<div>
+  <Button style={{marginRight:'30px'}}>Accept</Button>
+  <Button>Deny</Button>
 </div>
 
       </form>

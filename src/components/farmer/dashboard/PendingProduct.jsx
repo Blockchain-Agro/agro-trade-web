@@ -3,14 +3,18 @@ import { Link } from 'react-router-dom';
 import Navbar from '../farmerProfileNavbar';
 import './../NavStyle.scss'
 import { Container, Row, Col } from 'reactstrap';
-import Card from '../Card';
+import Card from './CardFarmerNotification';
 
 import { Button} from 'reactstrap';
+
+// NO BUTTON
 
 export default class PendingProduct extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
+          id: this.props.location.id,
       people: [
         {
     product_name: "Wheat",
@@ -62,7 +66,8 @@ export default class PendingProduct extends React.Component {
 
     return(
         <div>
-    <Navbar/>
+    <Navbar id={this.state.id} />
+    {this.state.id}
     
       <Container fluid>
         <Row>

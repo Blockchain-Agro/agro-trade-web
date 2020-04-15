@@ -6,6 +6,7 @@ class FarmerProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: this.props.location.id,
             cropname:'',
             price:0,
             quant : 0,
@@ -24,8 +25,8 @@ onChange = date => this.setState({ date })
 
         <div>
 
-            <Navbar />
-
+            <Navbar id = {this.state.id}/>
+            {this.state.id}
                  <form onSubmit={this.handleSubmit} class="jotform-form">
 
             <input type="hidden" name="formID" value="200412672853451" />

@@ -8,7 +8,8 @@ export default class Navbar extends React.Component {
         super(props);
         this.state = {
             fname: this.props.fname,
-            lname: this.props.lname
+            lname: this.props.lname,
+            id: this.props.id,
         }
 
     }
@@ -26,21 +27,23 @@ export default class Navbar extends React.Component {
                 <Link to="/farmerLoginProfile" className="nav-link">Farmer</Link>
               </li>
               <li className="nav-item active">
-                <Link to="/farmerProfile" className="nav-link">Add Product</Link>
+              <Link to={{ pathname:"/farmerProfile", id: this.state.id }} className="nav-link">Add Product</Link>
               </li>
 
               <li className="nav-item active">
-                <Link to="/pendingProductFarmer" className="nav-link">Pending Products</Link>
+              <Link to={{ pathname:"/pendingProductFarmer", id: this.state.id }} className="nav-link">Pending Products</Link>
               </li>
 
               <li className="nav-item active">
-                <Link to="/farmerNotification" className="nav-link">Notification</Link>
+              <Link to={{ pathname:"/farmerNotification", id: this.state.id }} className="nav-link">Notification</Link>
               </li>
                <li className="nav-item active">
-                <Link to="/soldProduct" className="nav-link">Sold Products</Link>
+               <Link to={{ pathname:"/soldProduct", id: this.state.id }} className="nav-link">Sold Products</Link>
               </li>
             </ul>
           </div>
+          <div style={{marginRight:'10px'}}>{this.state.id}</div>
+
           <Button variant="contained"  color="secondary" id="Logout">Logout</Button>
         </nav>
 
