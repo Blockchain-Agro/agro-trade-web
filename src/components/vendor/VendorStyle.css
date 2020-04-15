@@ -50,7 +50,7 @@ body, html{
 }
 
 .form-label.form-label-auto {
-  
+
 display: inline-block;
 float: left;
 text-align: left;
@@ -170,3 +170,8 @@ text-align: left;
 margin-top: auto;
 margin-top: initial;
     }
+
+.vendorLoginForm{
+    margin-left: 200px;
+    margin-right: 100px;
+}

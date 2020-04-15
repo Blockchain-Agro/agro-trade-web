@@ -8,15 +8,14 @@ class FarmerLoginrofile extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = this.props.location.state;
+        this.state = JSON.parse(sessionStorage.user);
     }
 
   render() {
     console.log(this.state);
     return (
         <div>
-        <Navbar id = {JSON.parse(sessionStorage.user).email}/>
-       
+        <Navbar/>
      <div className="farmerLoginForm">
 
       <form onSubmit={this.handleSubmit}>
@@ -42,17 +41,7 @@ class FarmerLoginrofile extends React.Component {
             <h5>{this.state.fname}</h5>
         </div>
       </li>
-      <li class="form-line jf-required" data-type="control_textbox" id="id_4">
-        <label class="form-label form-label-left form-label-auto" id="label_4" for="input_4">
-          ID NO
-          <span class="form-required">
 
-          </span>
-        </label>
-        <div id="cid_4" class="form-input jf-required">
-        <h5>12345</h5>
-        </div>
-      </li>
 
 
       <li class="form-line jf-required" data-type="control_textbox" id="id_5">
@@ -62,7 +51,7 @@ class FarmerLoginrofile extends React.Component {
 
           </span>
         </label>
-        <div id="cid_5" class="form-input jf-required"><h5>maheshvetale999@gmail.com</h5>
+        <div id="cid_5" class="form-input jf-required"><h5>{this.state.email}</h5>
         </div>
       </li>
 
@@ -73,7 +62,7 @@ class FarmerLoginrofile extends React.Component {
 
           </span>
         </label>
-        <div id="cid_5" class="form-input jf-required"><h5>9920141478</h5>
+        <div id="cid_5" class="form-input jf-required"><h5>{this.state.phone}</h5>
         </div>
       </li>
 
@@ -84,7 +73,7 @@ class FarmerLoginrofile extends React.Component {
 
           </span>
         </label>
-        <div id="cid_5" class="form-input jf-required"><h5>501 - Shree Sidhhi, Plot No 21 , Sec 01</h5>
+        <div id="cid_5" class="form-input jf-required"><h5>{this.state.address}</h5>
         </div>
       </li>
 
@@ -96,7 +85,7 @@ class FarmerLoginrofile extends React.Component {
 
           </span>
         </label>
-        <div id="cid_5" class="form-input jf-required"><h5>Navi Mumbai</h5>
+        <div id="cid_5" class="form-input jf-required"><h5>{this.state.citys}</h5>
         </div>
       </li>
 
@@ -107,7 +96,7 @@ class FarmerLoginrofile extends React.Component {
 
           </span>
         </label>
-        <div id="cid_5" class="form-input jf-required"><h5>Maharashtra</h5>
+        <div id="cid_5" class="form-input jf-required"><h5>{this.state.state}</h5>
         </div>
       </li>
 
@@ -118,7 +107,7 @@ class FarmerLoginrofile extends React.Component {
 
           </span>
         </label>
-        <div id="cid_5" class="form-input jf-required"><h5>123456</h5>
+        <div id="cid_5" class="form-input jf-required"><h5>{this.state.zip}</h5>
         </div>
       </li>
 

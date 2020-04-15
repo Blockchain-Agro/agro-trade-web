@@ -22,13 +22,6 @@ class Farmer extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  shoot()
-  {
-    this.props.history.push({
-        pathname: './farmer'
-    });
-  }
-
     handleChange(e) {
         let change = {}
         change[e.target.name] = e.target.value
@@ -47,13 +40,13 @@ class Farmer extends React.Component {
 
     const response = await axios.post(SERVER_ADDRESS + '/farmer-login', data);
     console.log('login status response :-', response.data);
-    
+
 
     if(response.data.status) {
         const farmerData = response.data.farmerData[0];
         console.log('farmer data :-', farmerData);
 
-        const temp = 
+        const temp =
     {
       fname: farmerData.first_name,
       mname: farmerData.middle_name,
@@ -65,7 +58,7 @@ class Farmer extends React.Component {
       reviewCount: farmerData.review_count,
       address: farmerData.address,
       city: farmerData.city,
-      state: farmerData.email.state,
+      state: farmerData.state,
       zip: farmerData.zip,
       phone: farmerData.phone,
   }
@@ -76,21 +69,6 @@ class Farmer extends React.Component {
 
         this.props.history.push({
             pathname: '../farmerLoginProfile',
-            state: {
-                fname: farmerData.first_name,
-                mname: farmerData.middle_name,
-                lname: farmerData.last_name,
-                email: farmerData.email,
-                ethAddress: farmerData.eth_address,
-                ipfsHash: farmerData.ipfs_hash,
-                trust: farmerData.trust,
-                reviewCount: farmerData.review_count,
-                address: farmerData.address,
-                city: farmerData.city,
-                state: farmerData.email.state,
-                zip: farmerData.zip,
-                phone: farmerData.phone,
-            }
         });
     }
     if(!response.data.status) {

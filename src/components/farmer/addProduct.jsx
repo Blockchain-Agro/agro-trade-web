@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Navbar from './farmerProfileNavbar';
-// import Calendar from 'react-calendar';
+import Calendar from 'react-calendar';
 import IPFS from '../../api/ipfs';
 import axios from 'axios';
 
@@ -11,8 +11,8 @@ class FarmerProfile extends Component {
         super(props);
         this.state = {
             info:JSON.parse(sessionStorage.user),
-            id: this.props.location.id,
-            productName:'',
+            //id: this.props.location.id,
+            productname:'',
             price:0,
             type:'',
             quant : 0,
@@ -25,10 +25,6 @@ class FarmerProfile extends Component {
         date: new Date(),
     }
 
-    state = {
-
-    }
-
     handleChange(e) {
       let change = {}
       change[e.target.name] = e.target.value
@@ -38,41 +34,55 @@ class FarmerProfile extends Component {
 onChange = date => this.setState({ date })
 
 
-    async handleSubmit(event){
-        event.preventDefault();
-
-        console.log("control insode");
-        const { productName, price, quant, type, status } = this.state;
-        const dataForIpfs = {
-            productName,
-            price,
-            quant,
-            type: 'Fruit',
-            // TODO remove this later
-            farmerAddress: this.state.info.ethAddress,
-            eth_id: 4,
-            status: 0,
-        }
-        const ipfsHash = await IPFS.getIpfsHash(dataForIpfs);
-        console.log('IPFS hash :-', ipfsHash);
-
-        const data = {
-            productName,
-            price,
-            quant,
-            type: 'Fruit',
-            ipfsHash,
-            farmerAddress: this.state.info.ethAddress,
-            // TODO remove this later
-            eth_id: 4,
-            status: 0,
-        }
-
-        console.log('Data to db :-', data);
-
-        const response = await axios.post('http://localhost:3001/add-product', data);
-        console.log('add-product status :-', response);
+async handleSubmit(event){
+    event.preventDefault();
+    console.log("control insode");
+    //alert("HELLO");
+    const {productname, price, quant, type} = this.state;
+    const dataForIpfs = {
+      productname,
+      price,
+      quant,
+      type,
+      // TODO remove this later
+      farmerAddress:this.state.info.ethAddress,
+      eth_id:'Count',
+      status:0,
     }
+    console.log(dataForIpfs);
+    const ipfsHash = await IPFS.getIpfsHash(dataForIpfs);
+
+    console.log('IPFS hash :-', ipfsHash);
+
+    const data = {
+      productname,
+      price,
+      quant,
+      type,
+      ipfsHash,
+      farmerAddress:this.state.info.ethAddress,
+      // TODO remove this later
+      eth_id:'Count',
+      status:0,
+    }
+
+    console.log('Data to db :-', data);
+
+    const status = await axios.post('http://localhost:3001/add-product', data);
+    console.log(status);
+      if(status) {
+        alert("Product is added!");
+        this.props.history.push({
+            pathname: '../farmerLoginProfile',
+            state: {
+                fname: this.state.fname,
+                lname: this.state.lname,
+                email: this.state.email,
+            }
+        });
+    }
+
+}
 
   render () {
     return (
@@ -80,7 +90,6 @@ onChange = date => this.setState({ date })
         <div>
 
             <Navbar id = {this.state.id}/>
-            {JSON.parse(sessionStorage.user).email}
                  <form onSubmit={this.handleSubmit} class="jotform-form">
 
             <input type="hidden" name="formID" value="200412672853451" />
@@ -108,14 +117,14 @@ onChange = date => this.setState({ date })
         </span>
         </label>
         <div id="cid_2" class="form-input jf-required">
-          <input type="text" value={this.state.productName} onChange={this.handleChange} id="input_2" name="productName" data-type="input-textbox" class="form-textbox validate[required]" size="20"  placeholder=" " data-component="textbox" aria-labelledby="label_2" required="" />
+          <input type="text" value={this.state.productname} onChange={this.handleChange} id="input_2" name="productname" data-type="input-textbox" class="form-textbox validate[required]" size="20"  placeholder=" " data-component="textbox" aria-labelledby="label_2" required="" />
         </div>
       </li>
             <li class="form-line" data-type="control_dropdown" id="id_13">
         <label class="form-label form-label-left form-label-auto" id="label_13" for="input_13"> TYPE OF CROP </label>
         <div id="cid_13" class="form-input">
-          <select class="form-dropdown" id="input_13" name="type"  data-component="dropdown" aria-labelledby="label_13">
-            <option value="">  </option>
+          <select class="form-dropdown" id="input_13" name="type" value={this.state.type} onChange={this.handleChange} data-component="dropdown" aria-labelledby="label_13">
+            <option value=""> </option>
             <option value="Fruit"> Fruit </option>
             <option value="Green"> Green </option>
             <option value="Starchy"> Starchy </option>

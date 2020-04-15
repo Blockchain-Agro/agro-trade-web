@@ -7,7 +7,7 @@ async function getAccountForFarmer() {
 
 async function getAccountForVendor() {
   const accounts = await web3.eth.getAccounts();
-  return accounts[0];
+  return accounts[1];
 }
 
 module.exports.getAccountForFarmer = getAccountForFarmer;
