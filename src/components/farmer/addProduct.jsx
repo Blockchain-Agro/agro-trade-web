@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import Navbar from './farmerProfileNavbar';
-import Calendar from 'react-calendar';
-import IPFS from '../../api/ipfs';
 import axios from 'axios';
+import Calendar from 'react-calendar';
+
+import Navbar from './farmerProfileNavbar';
+import IPFS from '../../api/ipfs';
+import Loader from '../other/Loader/Loader';
+
 
 // ETH AD
 class FarmerProfile extends Component {
@@ -16,6 +19,7 @@ class FarmerProfile extends Component {
             price:0,
             type:'',
             quant : 0,
+            loading: false,
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -35,6 +39,9 @@ onChange = date => this.setState({ date })
 
 
 async handleSubmit(event){
+    this.setState({
+        loading: true,
+    });
     event.preventDefault();
     console.log("control insode");
     //alert("HELLO");
@@ -66,6 +73,9 @@ async handleSubmit(event){
       status:0,
     }
 
+    this.setState({
+        loading: false,
+    });
     console.log('Data to db :-', data);
 
     const status = await axios.post('http://localhost:3001/add-product', data);
@@ -85,6 +95,9 @@ async handleSubmit(event){
 }
 
   render () {
+      if(this.state.loading) {
+          return <Loader />
+      }
     return (
 
         <div>
