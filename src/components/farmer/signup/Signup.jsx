@@ -48,7 +48,7 @@ class Signup extends React.Component {
         account: address,
     })
 
-    // // post request with all the input params
+    // post request with all the input params
     const { fname, mname, lname, email, street, block, city, state, zip, phone } = this.state;
 
     const dataForIpfs = {
