@@ -5,7 +5,7 @@ function createConnection() {
   const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "root",
+    password: '',
     database: "agro_trade"
   });
   const query = util.promisify(connection.query).bind(connection);

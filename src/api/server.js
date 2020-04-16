@@ -203,6 +203,8 @@ app.post('/create-vendor', async function(req, res) {
   return true;
 });
 
+
+
 app.post('/vendor-login', async function(req, res) {
   const data = {
     email: req.body.email,
@@ -233,6 +235,44 @@ app.post('/vendor-login', async function(req, res) {
   }
 });
 
+
+app.post('/get-farmer-notification', async function(req, res) {
+  const data = {
+    farmer_address:req.body.farmer_address,
+  }
+  
+  const sql = `SELECT product_info.id,pending_products.farmer_address,product_info.eth_id,product_info.ipfs_hash,product_info.name,product_info.type,product_info.quantity,product_info.status,product_info.price,vendor_info.first_name, vendor_info.phone_number from ((pending_products INNER JOIN product_info ON pending_products.product_id = product_info.id) INNER JOIN vendor_info ON vendor_info.eth_address = pending_products.vendor_address) where pending_products.farmer_address = '${data.farmer_address}';`;
+  const fetchedNotification = await MySQL.getData(sql);
+  console.log('fetched data :-', fetchedNotification);
+
+  responseData = {
+    fetchedNotification: fetchedNotification,
+  }
+
+  res.end(JSON.stringify(responseData));
+
+});
+
+
+app.post('/get-pending-products', async function(req, res) {
+  const data = {
+    farmer_address:req.body.farmer_address,
+  }
+
+  const sql = `SELECT * from product_info where farmer_address = '${data.farmer_address}' and status = 0; `;
+  const fetchedNotification = await MySQL.getData(sql);
+  console.log('fetched data :-', fetchedNotification);
+
+  responseData = {
+    fetchedNotification: fetchedNotification,
+  }
+
+  res.end(JSON.stringify(responseData));
+
+});
+
+
 app.listen(3001, () => {
   console.log('Server Listening on port 3001');
 });
+
