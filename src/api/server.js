@@ -125,7 +125,7 @@ app.post('/add-product', async function(req, res) {
     farmer_address:req.body.farmerAddress,
     eth_id:req.body.eth_id,
     ipfs_hash:req.body.ipfsHash,
-    name:req.body.name,
+    name:req.body.productname,
     price:req.body.price,
     quantity:req.body.quant,
     type:req.body.type
