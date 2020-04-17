@@ -85,7 +85,7 @@ class FarmerLoginrofile extends React.Component {
 
           </span>
         </label>
-        <div id="cid_5" class="form-input jf-required"><h5>{this.state.citys}</h5>
+        <div id="cid_5" class="form-input jf-required"><h5>{this.state.city}</h5>
         </div>
       </li>
 

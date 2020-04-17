@@ -203,8 +203,6 @@ app.post('/create-vendor', async function(req, res) {
   return true;
 });
 
-
-
 app.post('/vendor-login', async function(req, res) {
   const data = {
     email: req.body.email,
@@ -235,44 +233,69 @@ app.post('/vendor-login', async function(req, res) {
   }
 });
 
+app.post('/fetch-products',async function(req,res){
+  const sql = `SELECT * FROM product_info;`;
+  const product_info = await MySQL.getData(sql);
+  res.end(JSON.stringify(product_info));
 
-app.post('/get-farmer-notification', async function(req, res) {
-  const data = {
-    farmer_address:req.body.farmer_address,
+});
+
+app.post('/add-purchase-request-vendor',async function(req,res){
+
+  const fetch_id_query = `SELECT id FROM pending_products where product_id=${req.body.product_id}
+   AND farmer_address='${req.body.farmer_address}'
+   AND vendor_address='${req.body.vendor_address}';`;
+   const already_exists = await MySQL.isRegisteredFarmer(fetch_id_query);
+   if(already_exists)
+   {
+      const data = {
+         status : false
+      } 
+      res.end(JSON.stringify(data));
+      return;
+   }
+   //Above part is done to ensure request is not duplicated
+
+  const insert_entry = `INSERT INTO pending_products(product_id,farmer_address,vendor_address)
+    values(
+      ${req.body.product_id},
+      '${req.body.farmer_address}',
+      '${req.body.vendor_address}'
+      );`;
+
+  const QueryStatus = await MySQL.executeQuery(insert_entry);
+  console.log("SENDING : ",QueryStatus);
+
+  if(QueryStatus)
+  {
+     const pending_id = await MySQL.getData(fetch_id_query);
+     const data = {
+      status : QueryStatus,
+      id : pending_id[0].id
+     }
+     console.log("SENDING : ",data);
+     res.end(JSON.stringify(data));
+  }
+  else
+  {
+      const data = {
+        status : QueryStatus
+      } 
+      res.end(JSON.stringify(data));
   }
   
-  const sql = `SELECT product_info.id,pending_products.farmer_address,product_info.eth_id,product_info.ipfs_hash,product_info.name,product_info.type,product_info.quantity,product_info.status,product_info.price,vendor_info.first_name, vendor_info.phone_number from ((pending_products INNER JOIN product_info ON pending_products.product_id = product_info.id) INNER JOIN vendor_info ON vendor_info.eth_address = pending_products.vendor_address) where pending_products.farmer_address = '${data.farmer_address}';`;
-  const fetchedNotification = await MySQL.getData(sql);
-  console.log('fetched data :-', fetchedNotification);
-
-  responseData = {
-    fetchedNotification: fetchedNotification,
-  }
-
-  res.end(JSON.stringify(responseData));
-
 });
 
 
-app.post('/get-pending-products', async function(req, res) {
-  const data = {
-    farmer_address:req.body.farmer_address,
-  }
+app.post('/fetch-pending-products',async function(req,res){
 
-  const sql = `SELECT * from product_info where farmer_address = '${data.farmer_address}' and status = 0; `;
-  const fetchedNotification = await MySQL.getData(sql);
-  console.log('fetched data :-', fetchedNotification);
-
-  responseData = {
-    fetchedNotification: fetchedNotification,
-  }
-
-  res.end(JSON.stringify(responseData));
-
+    const sql = `SELECT pi.id,pp.id as request_id,pi.farmer_address,eth_id,name,price,quantity,type
+    FROM product_info pi,pending_products pp
+    WHERE pi.id=pp.product_id AND pp.vendor_address='${req.body.vendor_address}';`;
+    const pending_products = await MySQL.getData(sql);
+    res.end(JSON.stringify(pending_products));
 });
-
 
 app.listen(3001, () => {
   console.log('Server Listening on port 3001');
 });
-

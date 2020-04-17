@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link,withRouter} from 'react-router-dom';
 import './NavStyle.scss'
 import { Button} from 'reactstrap';
 
-export default class Navbar extends React.Component {
+class farmerProfileNavbar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -11,7 +11,16 @@ export default class Navbar extends React.Component {
             lname: this.props.lname,
             id: this.props.id,
         }
+        this.logout = this.logout.bind(this);
+  }
 
+  logout()
+    {
+        sessionStorage.clear();
+        alert("You have been logged out!")
+        this.props.history.push({
+            pathname: '/',
+        });
     }
 
   render() {
@@ -44,9 +53,11 @@ export default class Navbar extends React.Component {
           </div>
           <div style={{marginRight:'10px'}}>{this.state.id}</div>
 
-          <Button variant="contained"  color="secondary" id="Logout">Logout</Button>
+          <Button variant="contained"  color="secondary" id="Logout" onClick={this.logout}>Logout</Button>
         </nav>
 
     );
   }
 }
+
+export default withRouter(farmerProfileNavbar);

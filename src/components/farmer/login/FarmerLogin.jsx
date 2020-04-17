@@ -78,6 +78,10 @@ class Farmer extends React.Component {
   }
 
   render() {
+    if(sessionStorage.user)
+    {
+      this.props.history.push('/farmerLoginProfile');
+    }
     return (
         <div>
         <Navbar/>

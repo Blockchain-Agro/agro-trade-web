@@ -62,7 +62,7 @@ async handleSubmit(event){
     console.log('IPFS hash :-', ipfsHash);
 
     const data = {
-      productname:this.state.productname,
+      productname,
       price,
       quant,
       type,
@@ -129,8 +129,9 @@ async handleSubmit(event){
         *
         </span>
         </label>
-        <div  class="form-input jf-required">
-        <input type="text" value={this.state.productname} onChange={this.handleChange}  name="productname" class="form-textbox validate[required]" size="20"  placeholder=" " data-component="textbox" aria-labelledby="label_4" required="" />        </div>
+        <div id="cid_2" class="form-input jf-required">
+          <input type="text" value={this.state.productname} onChange={this.handleChange} id="input_2" name="productname" data-type="input-textbox" class="form-textbox validate[required]" size="20"  placeholder=" " data-component="textbox" aria-labelledby="label_2" required="" />
+        </div>
       </li>
             <li class="form-line" data-type="control_dropdown" id="id_13">
         <label class="form-label form-label-left form-label-auto" id="label_13" for="input_13"> TYPE OF CROP </label>

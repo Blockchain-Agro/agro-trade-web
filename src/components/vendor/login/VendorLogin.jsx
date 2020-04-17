@@ -1,13 +1,9 @@
 import React from 'react';
 import axios from 'axios';
-import { Button} from 'reactstrap';
 import { Link } from 'react-router-dom';
-
 import './../VendorStyle.css';
 import Navbar from '../vendorHomeNavbar';
 import { withRouter } from 'react-router-dom';
-import Portis from '../../../api/portis';
-import IPFS from '../../../api/ipfs';
 
 const SERVER_ADDRESS = 'http://localhost:3001';
 
@@ -63,8 +59,8 @@ class Vendor extends React.Component {
             phone: vendorData.phone,
         }
 
-        sessionStorage.user = JSON.stringify(temp);
-        console.log('Data added in session :-', JSON.parse(sessionStorage.user));
+        sessionStorage.vendor = JSON.stringify(temp);
+        console.log('Data added in session :-', JSON.parse(sessionStorage.vendor));
 
         this.props.history.push({
             pathname: '../vendorLoginProfile',
@@ -78,6 +74,10 @@ class Vendor extends React.Component {
   }
 
   render() {
+    if(sessionStorage.vendor)
+    {
+      this.props.history.push('/vendorLoginProfile');
+    }
     return (
         <div>
         <Navbar/>

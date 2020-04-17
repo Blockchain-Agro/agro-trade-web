@@ -1,22 +1,17 @@
 import React from 'react';
-import axios from 'axios';
-
-
 import './VendorStyle.css';
 import Navbar from '../vendorProfileNavbar';
 import { withRouter } from 'react-router-dom';
-import Portis from '../../../api/portis';
-import IPFS from '../../../api/ipfs';
-const SERVER_ADDRESS = 'http://localhost:3001';
+
 
 
 class VendorLoginrofile extends React.Component {
 
   constructor(props) {
       super(props);
-      this.state = JSON.parse(sessionStorage.user); //this.props.location.state;
-      //sessionStorage.user = JSON.stringify(this.state);
-        //this.state = JSON.parse(sessionStorage.user);
+      this.state = JSON.parse(sessionStorage.vendor); //this.props.location.state;
+      //sessionStorage.vendor = JSON.stringify(this.state);
+        //this.state = JSON.parse(sessionStorage.vendor);
 
   }
 

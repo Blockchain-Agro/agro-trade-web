@@ -96,13 +96,11 @@ class Signup extends React.Component {
       });
 
     if(status) {
+        delete data.password;
+        sessionStorage.user = JSON.stringify(data);
+        console.log('Data added in session');
         this.props.history.push({
-            pathname: '../farmerLoginProfile',
-            state: {
-                fname: this.state.fname,
-                lname: this.state.lname,
-                email: this.state.email,
-            }
+            pathname: '../farmerLoginProfile'
         });
     }
   }

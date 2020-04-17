@@ -1,18 +1,22 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link,withRouter } from 'react-router-dom';
 import './NavStyle.scss'
 import { Button} from 'reactstrap';
 
-export default class Navbar extends React.Component {
+class vendorProfileNavbar extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            fname: this.props.fname,
-            lname: this.props.lname
-        }
-
+        this.logout = this.logout.bind(this);
     }
 
+    logout()
+    {
+        sessionStorage.clear();
+        alert("You have benn logged out!")
+        this.props.history.push({
+            pathname: '/',
+        });
+    }
 
   render() {
     return (
@@ -27,7 +31,7 @@ export default class Navbar extends React.Component {
                 <Link to="/vendorLoginProfile" className="nav-link">Vendor</Link>
               </li>
               <li className="nav-item active">
-                <Link to="/vendorProfile" className="nav-link">Product</Link>
+                <Link to="/productvendor" className="nav-link">Product</Link>
               </li>
 
               <li className="nav-item active">
@@ -37,14 +41,17 @@ export default class Navbar extends React.Component {
               <li className="nav-item active">
                 <Link to="/vendorNotification" className="nav-link">Notification</Link>
               </li>
+
                <li className="nav-item active">
                 <Link to="/boughtProduct" className="nav-link">Bought Products</Link>
               </li>
             </ul>
           </div>
-          <Button variant="contained"  color="secondary" id="Logout">Logout</Button>
+          <Button variant="contained"  color="secondary" id="Logout" onClick={this.logout}>Logout</Button>
         </nav>
 
     );
   }
 }
+
+export default withRouter(vendorProfileNavbar);

@@ -19,7 +19,6 @@ import FarmerNotification from './components/farmer/dashboard/FarmerNotification
 import AddProduct from './components/farmer/addProduct';
 import FarmerProductInfo from './components/farmer/dashboard/FarmerProductInfo';
 import VendorProductInfo from './components/vendor/dashboard/VendorProductInfo';
-import VendorProfile from './components/vendor/dashboard/VendorProfile';
 // import FarmerProductInfoSoldProduct from './components/farmer/cardInnerPages/';
 import FarmerProductInfoNotification from './components/farmer/dashboard/ProductInfoNotification';
 //   <Route path="/farmerProductInfoSoldProduct" component={ FarmerProductInfoSoldProduct } />
@@ -36,7 +35,6 @@ export default class Routes extends Component {
         
         <Route path="/vendor" component={ VendorSignup } />
         <Route path="/productvendor" component={ ProductDisplay }/>
-        <Route path="/vendorProfile" component={ VendorProfile } />
         <Route path="/productInfoVendor" component={ ProductInfoVendor } />
         <Route path="/vendorLogin" component={ VendorLogin } />
         <Route path="/pendingProductVendor" component={ VendorPendingProduct } />

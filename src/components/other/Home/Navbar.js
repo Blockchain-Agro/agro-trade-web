@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link,withRouter } from 'react-router-dom';
 import './NavStyle.scss'
 
 export default class Navbar extends React.Component {
@@ -31,3 +31,6 @@ export default class Navbar extends React.Component {
     );
   }
 }
+
+
+withRouter(Navbar);

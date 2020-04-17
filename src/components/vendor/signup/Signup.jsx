@@ -97,8 +97,8 @@ async handleSubmit(event)
   if(status)
   {
       delete data.password;
-      sessionStorage.user = JSON.stringify(data);
-      console.log('Data added in session :-', JSON.parse(sessionStorage.user));
+      sessionStorage.vendor = JSON.stringify(data);
+      console.log('Data added in session :-', JSON.parse(sessionStorage.vendor));
       this.props.history.push({
           pathname: '../vendorLoginProfile',
       });
