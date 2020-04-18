@@ -88,21 +88,22 @@ class Signup extends React.Component {
 
     console.log('Data to db :-', data);
 
-    const status = axios
-      .post('http://localhost:3001/create-farmer', data)
-      .then(() => console.log('Farmer added'))
-      .catch(err => {
-        console.error(err);
-      });
+    const response = await axios.post('http://localhost:3001/create-farmer', data);
 
-    if(status) {
+    if(response.data.status)
+    {
         delete data.password;
+        sessionStorage.clear();
         sessionStorage.user = JSON.stringify(data);
         console.log('Data added in session');
         this.props.history.push({
             pathname: '../farmerLoginProfile'
         });
     }
+  else
+  {
+    alert("Something went wrong, please try again...")
+  }
   }
 
   render() {

@@ -60,7 +60,7 @@ app.post('/create-farmer', async function(req, res) {
 
   // store data to farmer_info table
   const sql = `INSERT INTO farmer_info(email, eth_address,ipfs_hash,trust,
-    review_count, first_name, middle_name, last_name, address, city, state, zip)
+    review_count, first_name, middle_name, last_name, address, city, state, zip,phone_number)
     values(
       '${data.email}',
       '${data.ethAddress}',
@@ -73,14 +73,18 @@ app.post('/create-farmer', async function(req, res) {
       '${data.address}',
       '${data.city}',
       '${data.state}',
-      ${data.zip}
+      ${data.zip},
+      ${data.phone}
       );`;
 
-  const addToFarmerInfoQueryStatus = MySQL.executeQuery(sql);
+  const addToFarmerInfoQueryStatus = await MySQL.executeQuery(sql);
   if(addToLoginQueryStatus && addToFarmerInfoQueryStatus) {
-    return true;
+    res.send({status:true});
   }
-  return true;
+  else
+  {
+    res.send({status:false});
+  }
 });
 
 app.post('/farmer-login', async function(req, res) {
@@ -180,7 +184,7 @@ app.post('/create-vendor', async function(req, res) {
 
   // store data to farmer_info table
   const sql = `INSERT INTO vendor_info(email, eth_address,ipfs_hash,trust,
-    review_count, first_name, middle_name, last_name, address, city, state, zip)
+    review_count, first_name, middle_name, last_name, address, city, state, zip,phone_number)
     values(
       '${data.email}',
       '${data.ethAddress}',
@@ -193,14 +197,20 @@ app.post('/create-vendor', async function(req, res) {
       '${data.address}',
       '${data.city}',
       '${data.state}',
-      ${data.zip}
+      ${data.zip},
+      ${data.phone}
       );`;
 
-  const addToVendorInfoQueryStatus = MySQL.executeQuery(sql);
-  if(addToLoginQueryStatus && addToVendorInfoQueryStatus) {
-    return true;
+  const addToVendorInfoQueryStatus =  await MySQL.executeQuery(sql);
+  console.log("Status : " , addToLoginQueryStatus , " and " , addToVendorInfoQueryStatus);
+  if(addToLoginQueryStatus && addToVendorInfoQueryStatus)
+  {   
+      res.send({status:true});
   }
-  return true;
+  else
+  {
+    res.send({status:false});
+  }
 });
 
 app.post('/vendor-login', async function(req, res) {

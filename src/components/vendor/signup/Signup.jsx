@@ -68,8 +68,6 @@ async handleSubmit(event)
   // TO DO : remove this later
   // const ipfsHash = 'QmPmeKnFTW6DTGMHvy46tfGEoTP8QUa4ePWjZrcgxRw31n';
   console.log('IPFS hash :-', ipfsHash);
-
-  const password = this.state.password;
   const data = {
       ethAddress: address,
       ipfsHash,
@@ -82,26 +80,26 @@ async handleSubmit(event)
       state: this.state.state,
       phone: this.state.phone,
       zip: this.state.zip,
-      password,
+      password : this.state.password
   }
 
   console.log('Data to db :-', data);
 
-  const status = axios
-    .post('http://localhost:3001/create-vendor', data)
-    .then(() => console.log('Vendor added'))
-    .catch(err => {
-      console.error(err);
-    });
-
-  if(status)
+  const response = await axios.post('http://localhost:3001/create-vendor', data);
+  console.log("status reeived as : " + response.data.status)
+  if(response.data.status)
   {
       delete data.password;
+      sessionStorage.clear();
       sessionStorage.vendor = JSON.stringify(data);
       console.log('Data added in session :-', JSON.parse(sessionStorage.vendor));
       this.props.history.push({
-          pathname: '../vendorLoginProfile',
+          pathname: '/vendorLoginProfile',
       });
+  }
+  else
+  {
+    alert("Something went wrong, please try again...")
   }
 }
 
@@ -192,7 +190,7 @@ async handleSubmit(event)
       <div id="cid_11" class="form-input">
         <div data-wrapper-react="true">
           <span class="form-sub-label-container " style={{verticalalign:'top'}}>
-            <input type="tel" value={this.state.phone} onChange={this.handleChange} id="input_11_phone" name="phone" class="form-textbox" size="20"  data-component="phone" aria-labelledby="label_11 sublabel_11_phone" />
+            <input type="number" value={this.state.phone} onChange={this.handleChange} id="input_11_phone" name="phone" class="form-textbox" size="20"  data-component="phone" aria-labelledby="label_11 sublabel_11_phone" />
             <label class="form-sub-label" for="input_11_phone" id="sublabel_11_phone" style={{minheight:"13px"}} aria-hidden="false"> Phone Number </label>
           </span>
         </div>

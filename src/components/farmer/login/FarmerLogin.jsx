@@ -63,7 +63,11 @@ class Farmer extends React.Component {
       phone: farmerData.phone,
   }
 
-
+    if(sessionStorage.vendor)
+    {
+      alert("You are logged out from vendor account and will now be logged in as farmer");
+    }
+    sessionStorage.clear();
     sessionStorage.user = JSON.stringify(temp);
     console.log("Data Added to session\n");
 

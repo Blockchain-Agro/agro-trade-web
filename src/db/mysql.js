@@ -15,10 +15,8 @@ function createConnection() {
 async function executeQuery(query) {
   console.log('SQL query :-', query);
   const connection = createConnection();
-  connection(query, (err, data) => {
-    if(err) throw err;
-    console.log('query executed successfully.');
-  });
+  const status = await connection(query);
+  console.log("executeQuery status : ",status);
   return true;
 }
 
