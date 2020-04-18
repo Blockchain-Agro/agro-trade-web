@@ -60,7 +60,7 @@ class Farmer extends React.Component {
       city: farmerData.city,
       state: farmerData.state,
       zip: farmerData.zip,
-      phone: farmerData.phone,
+      phone: farmerData.phone_number,
   }
 
     if(sessionStorage.vendor)

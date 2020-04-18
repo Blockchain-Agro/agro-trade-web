@@ -94,7 +94,7 @@ app.post('/farmer-login', async function(req, res) {
   }
   const sql = `SELECT id FROM farmer_login WHERE email='${data.email}' and password='${data.password}';`;
   const fetchLoginDataStatus = await MySQL.isRegisteredFarmer(sql);
-  console.log('Fetch login data :-', fetchLoginDataStatus);
+  console.log('Fetch login data status :-', fetchLoginDataStatus);
 
   let fetchQueryData;
   let responseData;
@@ -105,6 +105,7 @@ app.post('/farmer-login', async function(req, res) {
       status: fetchLoginDataStatus,
       farmerData: fetchQueryData,
     }
+    console.log('Response :-', responseData);
     res.end(JSON.stringify(responseData));
   } else {
     responseData = {
@@ -204,7 +205,7 @@ app.post('/create-vendor', async function(req, res) {
   const addToVendorInfoQueryStatus =  await MySQL.executeQuery(sql);
   console.log("Status : " , addToLoginQueryStatus , " and " , addToVendorInfoQueryStatus);
   if(addToLoginQueryStatus && addToVendorInfoQueryStatus)
-  {   
+  {
       res.send({status:true});
   }
   else
@@ -260,7 +261,7 @@ app.post('/add-purchase-request-vendor',async function(req,res){
    {
       const data = {
          status : false
-      } 
+      }
       res.end(JSON.stringify(data));
       return;
    }
@@ -290,10 +291,10 @@ app.post('/add-purchase-request-vendor',async function(req,res){
   {
       const data = {
         status : QueryStatus
-      } 
+      }
       res.end(JSON.stringify(data));
   }
-  
+
 });
 
 
