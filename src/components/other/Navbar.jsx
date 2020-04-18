@@ -1,3 +1,9 @@
+
+
+
+//THIS FILE IS CURRENTLY USELESS
+
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 // import Portis from '@portis/web3';
@@ -41,7 +47,13 @@ export default class Navbar extends React.Component {
                 <Link to="/" className="nav-link">Home </Link>
               </li>
               <li className="nav-item">
-                <Link to="/farmer" className="nav-link">Farmer</Link>
+                {if(sessionStorage.vendor)
+                  {
+                    alert("You are already logged in as vendor.\nKindly logout from there to login as farmer...");
+                    <Link to="/farmer" className="nav-link">etgrggregrgrfg</Link>
+                  }}
+                
+                }
               </li>
               <li className="nav-item">
                 <Link to="/vendor" className="nav-link">Vendor</Link>
