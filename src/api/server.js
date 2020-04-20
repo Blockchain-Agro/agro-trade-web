@@ -6,9 +6,9 @@ const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
-const bs = require('../contracts/bs');
-const farmerContract = require('../contracts/farmer');
-const vendorContract = require('../contracts/vendor');
+// const bs = require('../contracts/bs');
+// const farmerContract = require('../contracts/farmer');
+// const vendorContract = require('../contracts/vendor');
 const MySQL = require('../db/mysql');
 
 // use cors to allow cross origin resource sharing.
@@ -44,11 +44,11 @@ app.post('/create-farmer', async function(req, res) {
 
   // store to contract on blockchain
 
-  const ipfsHashInBytes32 = bs.getBytes32FromIpfsHash(data.ipfsHash);
-  await farmerContract.addFarmer(
-    ipfsHashInBytes32,
-    data.ethAddress,
-  );
+  // const ipfsHashInBytes32 = bs.getBytes32FromIpfsHash(data.ipfsHash);
+  // await farmerContract.addFarmer(
+  //   ipfsHashInBytes32,
+  //   data.ethAddress,
+  // );
 
   // store data to farmer_login table
   const addToLoginQuery = `INSERT INTO farmer_login(email, password)
@@ -138,11 +138,11 @@ app.post('/add-product', async function(req, res) {
   }
 
   // store data to contract
-  const ipfsHashInBytes32 = bs.getBytes32FromIpfsHash(data.ipfs_hash);
-  await farmerContract.addProduct(
-    ipfsHashInBytes32,
-    data.farmer_address,
-  );
+  // const ipfsHashInBytes32 = bs.getBytes32FromIpfsHash(data.ipfs_hash);
+  // await farmerContract.addProduct(
+  //   ipfsHashInBytes32,
+  //   data.farmer_address,
+  // );
 
   const sql = `INSERT INTO product_info (farmer_address,eth_id,ipfs_hash,name,price,quantity,type) values(
     '${data.farmer_address}',
@@ -185,11 +185,11 @@ app.post('/create-vendor', async function(req, res) {
   console.log(data);
 
   // store data to contract
-  const ipfsHashInBytes32 = bs.getBytes32FromIpfsHash(data.ipfsHash);
-  await vendorContract.addVendor(
-    ipfsHashInBytes32,
-    data.ethAddress,
-  );
+  // const ipfsHashInBytes32 = bs.getBytes32FromIpfsHash(data.ipfsHash);
+  // await vendorContract.addVendor(
+  //   ipfsHashInBytes32,
+  //   data.ethAddress,
+  // );
 
   const addToLoginQuery = `INSERT INTO vendor_login(email, password)
     values(
