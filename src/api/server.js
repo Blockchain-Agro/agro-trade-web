@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 
 const bs = require('../contracts/bs');
 const farmerContract = require('../contracts/farmer');
+const vendorContract = require('../contracts/vendor');
 const MySQL = require('../db/mysql');
 
 // use cors to allow cross origin resource sharing.
@@ -182,6 +183,13 @@ app.post('/create-vendor', async function(req, res) {
   };
 
   console.log(data);
+
+  // store data to contract
+  const ipfsHashInBytes32 = bs.getBytes32FromIpfsHash(data.ipfsHash);
+  await vendorContract.addVendor(
+    ipfsHashInBytes32,
+    data.ethAddress,
+  );
 
   const addToLoginQuery = `INSERT INTO vendor_login(email, password)
     values(
