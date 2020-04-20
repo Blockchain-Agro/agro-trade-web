@@ -9,6 +9,13 @@ async function addFarmer(ipfsHash, address) {
   return txReceipt;
 }
 
+async function addProduct(ipfsHash, address) {
+  const instance = await interacts.getFarmerContractInstance();
+
+  const txReceipt = await instance.methods.addItem(ipfsHash).send({from: address});
+  return txReceipt;
+}
+
 async function getFarmer(address) {
   const instance = await interacts.getFarmerContractInstance();
   const data = await instance.methods.farmers(address).call();
@@ -20,3 +27,4 @@ async function getFarmer(address) {
 
 module.exports.addFarmer = addFarmer;
 module.exports.getFarmer = getFarmer;
+module.exports.addProduct = addProduct;

@@ -6,8 +6,8 @@ const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
-// const bs = require('../contracts/bs');
-// const farmerContract = require('../contracts/farmer');
+const bs = require('../contracts/bs');
+const farmerContract = require('../contracts/farmer');
 const MySQL = require('../db/mysql');
 
 // use cors to allow cross origin resource sharing.
@@ -43,11 +43,11 @@ app.post('/create-farmer', async function(req, res) {
 
   // store to contract on blockchain
 
-  // const ipfsHashInBytes32 = bs.getBytes32FromIpfsHash(data.ipfsHash);
-  // await farmerContract.addFarmer(
-  //   ipfsHashInBytes32,
-  //   data.ethAddress,
-  // );
+  const ipfsHashInBytes32 = bs.getBytes32FromIpfsHash(data.ipfsHash);
+  await farmerContract.addFarmer(
+    ipfsHashInBytes32,
+    data.ethAddress,
+  );
 
   // store data to farmer_login table
   const addToLoginQuery = `INSERT INTO farmer_login(email, password)
@@ -124,7 +124,7 @@ app.get('/farmer-signup-data', async function(req, res) {
 });
 
 app.post('/add-product', async function(req, res) {
-  console.log("insode add-product");
+  console.log("inside add-product");
 
   const data = {
     farmer_address:req.body.farmerAddress,
@@ -135,6 +135,14 @@ app.post('/add-product', async function(req, res) {
     quantity:req.body.quant,
     type:req.body.type
   }
+
+  // store data to contract
+  const ipfsHashInBytes32 = bs.getBytes32FromIpfsHash(data.ipfs_hash);
+  await farmerContract.addProduct(
+    ipfsHashInBytes32,
+    data.farmer_address,
+  );
+
   const sql = `INSERT INTO product_info (farmer_address,eth_id,ipfs_hash,name,price,quantity,type) values(
     '${data.farmer_address}',
     '${data.eth_id}',
