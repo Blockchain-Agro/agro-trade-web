@@ -16,12 +16,14 @@ class VendorProductInfo extends Component {
         price_per_kg : this.props.location.state.price_per_kg,
         quantity_in_kg : this.props.location.state.quantity_in_kg,
         farmer_address : this.props.location.state.farmer_address,
-        vendor_address : JSON.parse(sessionStorage.vendor).ethAddress
+        vendor_address : JSON.parse(sessionStorage.vendor).ethAddress,
+        status : this.props.location.state.status,
     }
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.Add_request = this.Add_request.bind(this);
+    this.Cancel_request = this.Cancel_request.bind(this);
   }
 
-  async handleSubmit(event)
+  async Add_request(event)
   { 
     event.preventDefault();
     const data = {
@@ -35,6 +37,7 @@ class VendorProductInfo extends Component {
     if(response.data.status) 
     {
       alert("Your request for purchase has been recorded.\nRequest ID : " + response.data.id)
+      this.props.history.push('/productvendor');
     }
     else
     {
@@ -42,14 +45,59 @@ class VendorProductInfo extends Component {
     }
   }
 
+  async Cancel_request(event)
+  {
+    event.preventDefault();
+    const data = {
+      product_id : this.state.product_id,
+      farmer_address : this.state.farmer_address,
+      vendor_address : this.state.vendor_address
+    }
+    console.log("data ready to be sent : ",data);
+    const response = await axios.post(SERVER_ADDRESS + '/delete-vendor-purchase-request', data);
+    console.log("REceived data : ", response.data);
+    if(response.data.status) 
+    {
+      alert("Your request for purchase has been deleted. You still can re-apply later !")
+      this.props.history.push('/pendingProductVendor');
+    }
+    else
+    {
+      alert("Some error occured in deleting, please try again...");
+    }
+  }
+
   render () {
+
+    let insert;
+    if(this.state.status == 0){
+         insert = <Button onClick={this.Add_request}> Add request for purchase </Button>;
+    }
+    else if(this.state.status == 1){
+         insert = <Button onClick={this.Cancel_request}>Cancel Request</Button>;
+    }
+    else if(this.state.status == 2){
+         insert = <React.Fragment>
+                     <li class="form-line jf-required" data-type="control_textbox" id="id_2">
+                      <label class="form-label form-label-left form-label-auto" id="label_2" for="input_2">
+                      Timestamp
+                      <span class="form-required">
+                      </span>
+                      </label>
+                      <div id="cid_2" class="form-input jf-required">
+                        <h5>{this.props.location.state.timestamp}</h5>
+                      </div>
+                    </li>
+                  </React.Fragment>
+    }
+
 
     return (
         <div>
 
       <Navbar />
 
-  <form onSubmit={this.handleSubmit} class="jotform-form">
+  <form class="jotform-form">
 
     <div role="main" class="form-all">
       <ul class="form-section page-section">
@@ -131,9 +179,8 @@ class VendorProductInfo extends Component {
         </div>
       </li>
 
-    <Button type="submit"> Add request for purchase </Button>
+      {insert}
             
-
     </ul>
 
     

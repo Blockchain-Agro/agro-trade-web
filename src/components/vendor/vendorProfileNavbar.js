@@ -37,11 +37,11 @@ class vendorProfileNavbar extends React.Component {
               <li className="nav-item active">
                 <Link to="/pendingProductVendor" className="nav-link">Pending Products</Link>
               </li>
-
+              {/*
               <li className="nav-item active">
                 <Link to="/vendorNotification" className="nav-link">Notification</Link>
               </li>
-
+              */}
                <li className="nav-item active">
                 <Link to="/boughtProduct" className="nav-link">Bought Products</Link>
               </li>

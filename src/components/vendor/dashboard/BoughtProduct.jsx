@@ -26,8 +26,8 @@ export default class VendorNotification extends React.Component {
       vendor_address : this.state.vendor_address
     }
     console.log("sending to db : ",  data);
-    const response = await axios.post(SERVER_ADDRESS + '/fetch-pending-products',data);
-    console.log('product info :-', response.data);
+    const response = await axios.post(SERVER_ADDRESS + '/fetch-sold-products',data);
+    console.log('sold product info :-', response.data);
     const products= [];
     for(let i=0;i<response.data.length ; i++)
     {
@@ -37,7 +37,9 @@ export default class VendorNotification extends React.Component {
         product_type : response.data[i].type,
         price_per_kg : response.data[i].price,
         quantity_in_kg : response.data[i].quantity,
-        farmer_address : response.data[i].farmer_address
+        farmer_address : response.data[i].farmer_address,
+        timestamp : response.data[i].sold_at,
+        status : 2
       })
 
       console.log("array : ",products);

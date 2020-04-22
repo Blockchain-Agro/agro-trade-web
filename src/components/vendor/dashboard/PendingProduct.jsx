@@ -36,7 +36,8 @@ export default class PendingProduct extends React.Component {
         product_type : response.data[i].type,
         price_per_kg : response.data[i].price,
         quantity_in_kg : response.data[i].quantity,
-        farmer_address : response.data[i].farmer_address
+        farmer_address : response.data[i].farmer_address,
+        status : 1
       })
 
       console.log("array : ",products);

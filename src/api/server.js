@@ -357,7 +357,8 @@ app.post('/vendor-login', async function(req, res) {
 });
 
 app.post('/fetch-products',async function(req,res){
-  const sql = `SELECT * FROM product_info;`;
+  const sql = `SELECT id,farmer_address,eth_id,name,price,quantity,type FROM product_info where id NOT IN
+              (select product_id from pending_products where vendor_address='${req.body.vendor_address}');`;
   const product_info = await MySQL.getData(sql);
   res.end(JSON.stringify(product_info));
 
@@ -415,6 +416,34 @@ app.post('/fetch-pending-products',async function(req,res){
     const sql = `SELECT pi.id,pp.id as request_id,pi.farmer_address,eth_id,name,price,quantity,type
     FROM product_info pi,pending_products pp
     WHERE pi.id=pp.product_id AND pp.vendor_address='${req.body.vendor_address}';`;
+    const pending_products = await MySQL.getData(sql);
+    res.end(JSON.stringify(pending_products));
+});
+
+app.post('/delete-vendor-purchase-request',async function(req,res){
+
+    const sql = `DELETE from pending_products WHERE
+    product_id=${req.body.product_id} AND
+    farmer_address='${req.body.farmer_address}' AND
+    vendor_address='${req.body.vendor_address}';`;
+    const QueryStatus = await MySQL.executeQuery(sql);   
+    if(QueryStatus)
+    {
+        res.send({status:true});
+    }
+    else
+    {
+      res.send({status:false});
+    }
+});
+
+
+
+app.post('/fetch-sold-products',async function(req,res){
+
+    const sql = `SELECT pi.id,sp.id as request_id,pi.farmer_address,eth_id,name,price,quantity,type,sold_at
+    FROM product_info pi,sold_products sp
+    WHERE pi.id=sp.product_id AND sp.vendor_address='${req.body.vendor_address}';`;
     const pending_products = await MySQL.getData(sql);
     res.end(JSON.stringify(pending_products));
 });

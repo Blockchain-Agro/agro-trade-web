@@ -54,9 +54,9 @@ class Vendor extends React.Component {
             reviewCount: vendorData.review_count,
             address: vendorData.address,
             city: vendorData.city,
-            state: vendorData.email.state,
+            state: vendorData.state,
             zip: vendorData.zip,
-            phone: vendorData.phone,
+            phone: vendorData.phone_number,
         }
 
         if(sessionStorage.user)

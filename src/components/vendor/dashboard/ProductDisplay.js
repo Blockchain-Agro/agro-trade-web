@@ -11,7 +11,8 @@ class ProductDisplay extends Component {
   constructor() {
     super();
     this.state = {
-      people: []
+      people: [],
+      vendor_address : JSON.parse(sessionStorage.vendor).ethAddress
     }
 
     this.fetchProducts = this.fetchProducts.bind(this);
@@ -22,7 +23,8 @@ class ProductDisplay extends Component {
   async fetchProducts()
   {
     //event.preventDefault();
-    const response = await axios.post(SERVER_ADDRESS + '/fetch-products');
+    const data = {vendor_address : this.state.vendor_address}
+    const response = await axios.post(SERVER_ADDRESS + '/fetch-products',data);
     console.log('product info :-', response.data);
     const products= [];
     for(let i=0;i<response.data.length ; i++)
@@ -33,7 +35,8 @@ class ProductDisplay extends Component {
         product_type : response.data[i].type,
         price_per_kg : response.data[i].price,
         quantity_in_kg : response.data[i].quantity,
-        farmer_address : response.data[i].farmer_address
+        farmer_address : response.data[i].farmer_address,
+        status : 0
       })
 
       console.log("array : ",products);
