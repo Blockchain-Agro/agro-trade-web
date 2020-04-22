@@ -67,7 +67,7 @@ this.shoot = this.shoot.bind(this);
   shoot()
   {
           this.props.history.push({
-        pathname: '../productInfoNotification', ///
+        pathname: '../productInfoSold', ///
         state: {
             id: this.props.person.id,
             product_name: this.props.person.name,

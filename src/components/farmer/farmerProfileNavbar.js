@@ -51,7 +51,7 @@ class farmerProfileNavbar extends React.Component {
               </li>
             </ul>
           </div>
-          <div style={{marginRight:'10px'}}>{this.state.id}</div>
+
 
           <Button variant="contained"  color="secondary" id="Logout" onClick={this.logout}>Logout</Button>
         </nav>
@@ -59,5 +59,5 @@ class farmerProfileNavbar extends React.Component {
     );
   }
 }
-
+//    <div style={{marginRight:'10px'}}>{this.state.id}</div>
 export default withRouter(farmerProfileNavbar);

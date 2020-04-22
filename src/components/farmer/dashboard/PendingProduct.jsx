@@ -2,9 +2,9 @@ import React from 'react';
 import Navbar from '../farmerProfileNavbar';
 import './../NavStyle.scss'
 import { Container, Row, Col } from 'reactstrap';
-import Card from './CardFarmerNotification';
-
-
+import Card from './CardFarmerPending';
+import axios from 'axios';
+const SERVER_ADDRESS = 'http://localhost:3001';
 // NO BUTTON
 
 export default class PendingProduct extends React.Component {
@@ -13,43 +13,28 @@ export default class PendingProduct extends React.Component {
 
         this.state = {
           id: this.props.location.id,
-      people: [
-        {
-    product_name: "Wheat",
-    type_crop: "starchy",
-    price_per_kg: "28",
-    quantity_in_kg: "50",
-    expiry_date: "20/02/2020"
-  },        {
-    product_name: "Wheat",
-    type_crop: "starchy",
-    price_per_kg: "28",
-    quantity_in_kg: "50",
-    expiry_date: "20/02/2020"
-  },
-        {
-    product_name: "Wheat",
-    type_crop: "starchy",
-    price_per_kg: "28",
-    quantity_in_kg: "50",
-    expiry_date: "20/02/2020"
-  },
-          {
-    product_name: "Wheat",
-    type_crop: "starchy",
-    price_per_kg: "28",
-    quantity_in_kg: "50",
-    expiry_date: "20/02/2020"
-  },
-          {
-    product_name: "Wheat",
-    type_crop: "starchy",
-    price_per_kg: "28",
-    quantity_in_kg: "50",
-    expiry_date: "20/02/2020"
-  }
-   ]
+      people: []
     }
+    this.fetchedPending();
+    }
+
+    async fetchedPending()
+    {
+      //event.preventDefault();
+
+      const data = {
+        farmer_address:JSON.parse(sessionStorage.user).ethAddress,
+      }
+    //  console.log('Farmer Address :-', JSON.parse(sessionStorage.user));
+      const response = await axios.post(SERVER_ADDRESS + '/get-pending-products',data);
+
+      let products= [];
+      products = response.data
+      console.log('product info :-', response.data);
+
+      this.setState({
+        people : response.data.fetchedNotification
+      })
     }
 
   render (){
@@ -64,9 +49,9 @@ export default class PendingProduct extends React.Component {
 
     return(
         <div>
-    <Navbar id={this.state.id} />
+    <Navbar  />
     {this.state.id}
-    
+
       <Container fluid>
         <Row>
           {peopleCards}
@@ -76,3 +61,42 @@ export default class PendingProduct extends React.Component {
     )
   }
 }
+
+
+/*
+
+  {
+product_name: "Wheat",
+type_crop: "starchy",
+price_per_kg: "28",
+quantity_in_kg: "50",
+expiry_date: "20/02/2020"
+},        {
+product_name: "Wheat",
+type_crop: "starchy",
+price_per_kg: "28",
+quantity_in_kg: "50",
+expiry_date: "20/02/2020"
+},
+  {
+product_name: "Wheat",
+type_crop: "starchy",
+price_per_kg: "28",
+quantity_in_kg: "50",
+expiry_date: "20/02/2020"
+},
+    {
+product_name: "Wheat",
+type_crop: "starchy",
+price_per_kg: "28",
+quantity_in_kg: "50",
+expiry_date: "20/02/2020"
+},
+    {
+product_name: "Wheat",
+type_crop: "starchy",
+price_per_kg: "28",
+quantity_in_kg: "50",
+expiry_date: "20/02/2020"
+}
+*/

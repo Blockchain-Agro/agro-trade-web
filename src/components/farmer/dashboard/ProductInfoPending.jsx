@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'reactstrap';
 import './../style.css'
 import Navbar from './../farmerProfileNavbar';
-import axios from 'axios'
 
-const SERVER_ADDRESS = 'localhost:3000'
 class FarmerProductInfo extends Component {
   constructor(props) {
     super(props);
@@ -14,26 +12,11 @@ class FarmerProductInfo extends Component {
             type_crop:this.props.location.state.type_crop,
             price_per_kg:this.props.location.state.price_per_kg,
             quantity_in_kg:this.props.location.state.quantity_in_kg,
-            vendor_contact:this.props.location.state.vendor_contact,
-            vendor_name:this.props.location.state.vendor_name
+
 
         }
-
-  //        this.accept = this.accept.bind(this);
-//          this.deny = this.deny.bind(this);
   }
 
-  /*async accept(event){
-    event.preventDefault();
-    const data = {
-      farmer_address:this.state.id,
-    }
-    const response = await axios.post(SERVER_ADDRESS + '/accept',data);
-    if(response == true){
-      window.location.reload();
-    }
-  }
-*/
   render () {
 
     return (
@@ -106,37 +89,15 @@ class FarmerProductInfo extends Component {
 
 
 
-                  <li class="form-line jf-required" data-type="control_textbox" id="id_2">
-        <label class="form-label form-label-left form-label-auto" id="label_2" for="input_2">
-        VENDOR NAME
-        <span class="form-required">
-        </span>
-        </label>
-        <div id="cid_2" class="form-input jf-required">
-          <h5>{this.state.vendor_name}</h5>
-        </div>
-      </li>
 
-                  <li class="form-line jf-required" data-type="control_textbox" id="id_2">
-        <label class="form-label form-label-left form-label-auto" id="label_2" for="input_2">
-        VENDOR CONTACT
-        <span class="form-required">
-        </span>
-        </label>
-        <div id="cid_2" class="form-input jf-required">
-          <h5>{this.state.vendor_contact}</h5>
-        </div>
-      </li>
+
 
 
     </ul>
 
 
 </div>
-<div>
-  <Button style={{marginRight:'30px'}}>Accept</Button>
-  <Button>Deny</Button>
-</div>
+
 
       </form>
 
@@ -145,4 +106,3 @@ class FarmerProductInfo extends Component {
 }
 
 export default FarmerProductInfo;
-// onClick = {this.accept}
