@@ -4,7 +4,7 @@ import './../style.css'
 import Navbar from './../farmerProfileNavbar';
 import axios from 'axios'
 
-const SERVER_ADDRESS = 'localhost:3000'
+const SERVER_ADDRESS = 'http://localhost:3001';
 class FarmerProductInfo extends Component {
   constructor(props) {
     super(props);
@@ -19,21 +19,29 @@ class FarmerProductInfo extends Component {
 
         }
 
-  //        this.accept = this.accept.bind(this);
-//          this.deny = this.deny.bind(this);
+          this.accept = this.accept.bind(this);
+          this.deny = this.deny.bind(this);
   }
 
-  /*async accept(event){
+  async accept(event){
     event.preventDefault();
     const data = {
-      farmer_address:this.state.id,
+      id:this.state.id,
     }
     const response = await axios.post(SERVER_ADDRESS + '/accept',data);
-    if(response == true){
-      window.location.reload();
-    }
+    alert('Request accepted!')
   }
-*/
+
+  async deny(event){
+    event.preventDefault();
+    const data = {
+      id:this.state.id,
+      vendor_name:this.state.vendor_name,
+    }
+    const response = await axios.post(SERVER_ADDRESS + '/accept',data);
+    alert('Request cancelled!')
+  }
+
   render () {
 
     return (
@@ -134,7 +142,7 @@ class FarmerProductInfo extends Component {
 
 </div>
 <div>
-  <Button style={{marginRight:'30px'}}>Accept</Button>
+  <Button onClick = {this.accept} style={{marginRight:'30px'}}>Accept</Button>
   <Button>Deny</Button>
 </div>
 
@@ -145,4 +153,4 @@ class FarmerProductInfo extends Component {
 }
 
 export default FarmerProductInfo;
-// onClick = {this.accept}
+//

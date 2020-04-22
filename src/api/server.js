@@ -88,6 +88,46 @@ app.post('/create-farmer', async function(req, res) {
   }
 });
 
+app.post('/accept',async function(req, res){
+  const data = {
+    id: req.body.id,
+  }
+
+  const sql = `UPDATE product_info SET status = 1 where id =${data.id};`
+
+  console.log("\n\nQuery :\n" + sql + "\n");
+  const addProduct = await MySQL.executeQuery(sql);
+  console.log("Adding status :" + addProduct);
+  if(addProduct) {
+    return true;
+  }
+  else {
+        return false;
+  }
+
+})
+
+app.post('/deny',async function(req, res){
+  const data = {
+    id: req.body.id,
+    vendor_name:this.state.vendor_name,
+  }
+
+  const sql = `DELETE from pending_products where id = ${data.id} and vendor_address = (select eth_address from vendor_info where first_name = '${vendor_name}');`
+
+  console.log("\n\nQuery :\n" + sql + "\n");
+  const addProduct = await MySQL.executeQuery(sql);
+  console.log("Adding status :" + addProduct);
+  if(addProduct) {
+    return true;
+  }
+  else {
+        return false;
+  }
+
+})
+
+
 app.post('/farmer-login', async function(req, res) {
   const data = {
     email: req.body.email,
@@ -171,7 +211,7 @@ app.post('/get-pending-products', async function(req, res) {
     farmer_address:req.body.farmer_address,
   }
 
-  const sql = `SELECT * from product_info where farmer_address = '${data.farmer_address}' and status = 1; `;
+  const sql = `SELECT * from product_info where farmer_address = '${data.farmer_address}' and status = 0; `;
   const fetchedNotification = await MySQL.getData(sql);
   console.log('fetched data :-', fetchedNotification);
 
@@ -188,7 +228,7 @@ app.post('/get-sold-products', async function(req, res) {
     farmer_address:req.body.farmer_address,
   }
 
-  const sql = `SELECT * from product_info where farmer_address = '${data.farmer_address}' and status = 0; `;
+  const sql = `SELECT * from product_info where farmer_address = '${data.farmer_address}' and status = 1; `;
   const fetchedNotification = await MySQL.getData(sql);
   console.log('fetched data :-', fetchedNotification);
 
@@ -272,7 +312,7 @@ app.post('/get-farmer-notification', async function(req, res) {
 
   console.log('Farmer Address :-', data.farmer_address);
 
-  const sql = `SELECT product_info.id,pending_products.farmer_address,product_info.eth_id,product_info.ipfs_hash,product_info.name,product_info.type,product_info.quantity,product_info.status,product_info.price,vendor_info.first_name, vendor_info.phone_number from ((pending_products INNER JOIN product_info ON pending_products.product_id = product_info.id) INNER JOIN vendor_info ON vendor_info.eth_address = pending_products.vendor_address) where pending_products.farmer_address = '${data.farmer_address}';`;
+  const sql = `SELECT product_info.id,pending_products.farmer_address,product_info.eth_id,product_info.ipfs_hash,product_info.name,product_info.type,product_info.quantity,product_info.status,product_info.price,vendor_info.first_name, vendor_info.phone_number from ((pending_products INNER JOIN product_info ON pending_products.product_id = product_info.id) INNER JOIN vendor_info ON vendor_info.eth_address = pending_products.vendor_address) where pending_products.farmer_address = '${data.farmer_address} and product_info.status = 0';`;
 
   console.log('Query :', sql);
   const fetchedNotification = await MySQL.getData(sql);
