@@ -17,7 +17,7 @@
 }
 
 .network-image {
-    background-image: url('farm.jpg');
+    background-image: url('pic1.jpeg');
     height: 500px;
     margin-left: 20px;
     margin-right: 20px;
@@ -28,12 +28,45 @@
 }
 
 .first-image {
-    background-image: url("minato.jpg");
+    background-image: url("pic2.jpeg");
     height: 300px;
-    width: 400px;
+    width: 300px;
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+.mahesh-image {
+    background-image: url("mahesh.JPG");
+    height: 300px;
+    width: 100px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.kiran-image {
+    background-image: url("kiran.jpeg");
+    height: 300px;
+    width: 100px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.litesh-image {
+    background-image: url("litesh.jpeg");
+    height: 300px;
+    width: 100px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.rajat-image {
+    background-image: url("rajat.jpeg");
+    height: 300px;
+    width: 100px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 
 .row {
     margin-block-start: 200px;
