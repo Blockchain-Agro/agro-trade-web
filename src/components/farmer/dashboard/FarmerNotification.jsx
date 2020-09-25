@@ -13,6 +13,9 @@ const SERVER_ADDRESS = 'http://localhost:3001';
 
 export default class FarmerNotification extends React.Component {
     constructor(props) {
+
+        console.log('props ===>', props);
+
         super(props);
         this.state = {
           id: this.props.location.id,
@@ -39,7 +42,7 @@ export default class FarmerNotification extends React.Component {
       console.log('product info :-', response.data);
 
       this.setState({
-        people : response.data.fetchedNotification
+        people : response.data
       })
     }
 
@@ -53,10 +56,23 @@ export default class FarmerNotification extends React.Component {
       );
     })
 
+    const cardsLength = peopleCards.length;
+    let heading;
+    if (cardsLength > 0) {
+        heading = `Here are the requests your products got from vandors.`;
+    } else {
+        heading = 'No requests yet!';
+    }
+
     return(
         <div>
     <Navbar id = {this.state.id}/>
-    {JSON.parse(sessionStorage.user).email}
+
+        <div className="title-div" style={{ marginTop: "50px"}}>
+            <h2>{ heading }</h2>
+        </div>
+
+
       <Container fluid>
         <Row>
           {peopleCards}

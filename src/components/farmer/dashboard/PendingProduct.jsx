@@ -47,10 +47,21 @@ export default class PendingProduct extends React.Component {
       );
     })
 
+
+    const cardsLength = peopleCards.length;
+    let heading;
+    if (cardsLength > 0) {
+        heading = `Here are the product details you have added. \nBut haven't get any request yet.`;
+    } else {
+        heading = 'Oops! No Products yet. Please check Notification section for requests from vendors.';
+    }
+
     return(
         <div>
     <Navbar  />
-    {this.state.id}
+        <div className="title-div" style={{ marginTop: "50px"}}>
+            <h2>{ heading }</h2>
+        </div>
 
       <Container fluid>
         <Row>

@@ -24,17 +24,18 @@ class VendorProductInfo extends Component {
   }
 
   async Add_request(event)
-  { 
+  {
     event.preventDefault();
     const data = {
       product_id : this.state.product_id,
       farmer_address : this.state.farmer_address,
       vendor_address : this.state.vendor_address
-    }
+    };
+
     console.log("data ready to be sent : ",data);
     const response = await axios.post(SERVER_ADDRESS + '/add-purchase-request-vendor', data);
     console.log("REceived data : ", response.data);
-    if(response.data.status) 
+    if(response.data.status)
     {
       alert("Your request for purchase has been recorded.\nRequest ID : " + response.data.id)
       this.props.history.push('/productvendor');
@@ -56,7 +57,7 @@ class VendorProductInfo extends Component {
     console.log("data ready to be sent : ",data);
     const response = await axios.post(SERVER_ADDRESS + '/delete-vendor-purchase-request', data);
     console.log("REceived data : ", response.data);
-    if(response.data.status) 
+    if(response.data.status)
     {
       alert("Your request for purchase has been deleted. You still can re-apply later !")
       this.props.history.push('/pendingProductVendor');
@@ -134,7 +135,7 @@ class VendorProductInfo extends Component {
         </div>
       </li>
 
-      
+
       <li class="form-line jf-required" data-type="control_textbox" id="id_2">
         <label class="form-label form-label-left form-label-auto" id="label_2" for="input_2">
         TYPE OF CROP
@@ -180,10 +181,10 @@ class VendorProductInfo extends Component {
       </li>
 
       {insert}
-            
+
     </ul>
 
-    
+
 </div>
 
       </form>

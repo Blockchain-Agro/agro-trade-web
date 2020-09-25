@@ -56,9 +56,20 @@ class ProductDisplay extends Component {
       )
     })
 
+    const cardsLength = peopleCards.length;
+    let heading;
+    if (cardsLength > 0) {
+        heading = `Check the newly added products from farmers. Send request if you want to buy.`;
+    } else {
+        heading = 'No products yet!';
+    }
+
     return (
       <div>
       <Navbar/>
+        <div className="title-div" style={{ marginTop: "50px"}}>
+          <h2>{ heading }</h2>
+        </div>
       <Container fluid>
         <Row>
           {peopleCards}

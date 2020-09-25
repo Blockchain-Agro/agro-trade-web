@@ -7,7 +7,10 @@ import axios from 'axios'
 const SERVER_ADDRESS = 'http://localhost:3001';
 class FarmerProductInfo extends Component {
   constructor(props) {
-    super(props);
+
+
+      super(props);
+      console.log('this.props ==>', this.props);
             this.state = {
             id: this.props.location.state.id,
             product_name: this.props.location.state.product_name,
@@ -15,8 +18,9 @@ class FarmerProductInfo extends Component {
             price_per_kg:this.props.location.state.price_per_kg,
             quantity_in_kg:this.props.location.state.quantity_in_kg,
             vendor_contact:this.props.location.state.vendor_contact,
-            vendor_name:this.props.location.state.vendor_name
-
+            vendor_name:this.props.location.state.vendor_name,
+            vendor_address: this.props.location.state.vendor_address,
+            farmer_address: JSON.parse(sessionStorage.user).ethAddress
         }
 
           this.accept = this.accept.bind(this);
@@ -27,19 +31,29 @@ class FarmerProductInfo extends Component {
     event.preventDefault();
     const data = {
       id:this.state.id,
-    }
+      vendorEthAddress: this.state.vendor_address,
+      farmerEthAddress: this.state.farmer_address
+    };
+
     const response = await axios.post(SERVER_ADDRESS + '/accept',data);
-    alert('Request accepted!')
+
+    if (response) {
+        alert('Request accepted!');
+    }
   }
 
   async deny(event){
     event.preventDefault();
     const data = {
-      id:this.state.id,
-      vendor_name:this.state.vendor_name,
+        id:this.state.id,
+        vendorEthAddress: this.state.vendor_address,
+        farmerEthAddress: this.state.farmer_address
+    };
+
+    const isSuccessfullyUpdated = await axios.post(SERVER_ADDRESS + '/deny',data);
+    if (isSuccessfullyUpdated) {
+        alert('Request cancelled!');
     }
-    const response = await axios.post(SERVER_ADDRESS + '/accept',data);
-    alert('Request cancelled!')
   }
 
   render () {
@@ -143,7 +157,7 @@ class FarmerProductInfo extends Component {
 </div>
 <div>
   <Button onClick = {this.accept} style={{marginRight:'30px'}}>Accept</Button>
-  <Button>Deny</Button>
+  <Button onClick = {this.deny} style={{marginRight:'30px'}}>Deny</Button>
 </div>
 
       </form>
