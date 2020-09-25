@@ -6,9 +6,9 @@ const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
-// const bs = require('../contracts/bs');
-// const farmerContract = require('../contracts/farmer');
-// const vendorContract = require('../contracts/vendor');
+const bs = require('../contracts/bs');
+const farmerContract = require('../contracts/farmer');
+const vendorContract = require('../contracts/vendor');
 const MySQL = require('../db/mysql');
 
 // use cors to allow cross origin resource sharing.
@@ -44,11 +44,14 @@ app.post('/create-farmer', async function(req, res) {
 
   // store to contract on blockchain
 
-  // const ipfsHashInBytes32 = bs.getBytes32FromIpfsHash(data.ipfsHash);
-  // await farmerContract.addFarmer(
-  //   ipfsHashInBytes32,
-  //   data.ethAddress,
-  // );
+  const ipfsHashInBytes32 = bs.getBytes32FromIpfsHash(data.ipfsHash);
+  const farmerAddResp = await farmerContract.addFarmer(
+    ipfsHashInBytes32,
+    data.ethAddress,
+  );
+
+  console.log('farmerAddResp ===>',farmerAddResp);
+
 
   // store data to farmer_login table
   const addToLoginQuery = `INSERT INTO farmer_login(email, password)
@@ -91,12 +94,25 @@ app.post('/create-farmer', async function(req, res) {
 app.post('/accept',async function(req, res){
   const data = {
     id: req.body.id,
+    vendorEthAddress: req.body.vendorEthAddress,
+    farmerEthAddress: req.body.farmerEthAddress
   }
 
   const sql = `UPDATE product_info SET status = 1 where id =${data.id};`
 
   console.log("\n\nQuery :\n" + sql + "\n");
   const addProduct = await MySQL.executeQuery(sql);
+
+  const insertQuery = `INSERT INTO sold_products(product_id, farmer_address, vendor_address, sold_at) VALUES(
+    '${data.id}',
+    '${data.farmerEthAddress}',
+    '${data.vendorEthAddress}',
+    ${ Math.round(new Date().getTime()/1000)}
+  );`;
+
+  const insertQueryResp = await MySQL.executeQuery(insertQuery);
+  console.log('insertQueryResp ===>', insertQueryResp);
+
   console.log("Adding status :" + addProduct);
   if(addProduct) {
     return true;
@@ -110,22 +126,23 @@ app.post('/accept',async function(req, res){
 app.post('/deny',async function(req, res){
   const data = {
     id: req.body.id,
-    vendor_name:this.state.vendor_name,
+    vendorEthAddress: req.body.vendorEthAddress,
+    farmerEthAddress: req.body.farmerEthAddress
   }
 
-  const sql = `DELETE from pending_products where id = ${data.id} and vendor_address = (select eth_address from vendor_info where first_name = '${vendor_name}');`
+  const updateQuery = `UPDATE product_info SET status = 0 where id = ${data.id};`
+  const updatedResp = await MySQL.executeQuery(updateQuery);
 
-  console.log("\n\nQuery :\n" + sql + "\n");
-  const addProduct = await MySQL.executeQuery(sql);
-  console.log("Adding status :" + addProduct);
-  if(addProduct) {
+  const deletQuery = `DELETE FROM pending_products WHERE product_id = ${data.id};`;
+  const deleteQueryUpdatedResp = await MySQL.executeQuery(deletQuery);
+
+  console.log('deleteQueryUpdatedResp ===>', deleteQueryUpdatedResp);
+
+  if (updatedResp.affectedRows == 1) {
     return true;
   }
-  else {
-        return false;
-  }
-
-})
+  return false;
+});
 
 
 app.post('/farmer-login', async function(req, res) {
@@ -178,11 +195,14 @@ app.post('/add-product', async function(req, res) {
   }
 
   // store data to contract
-  // const ipfsHashInBytes32 = bs.getBytes32FromIpfsHash(data.ipfs_hash);
-  // await farmerContract.addProduct(
-  //   ipfsHashInBytes32,
-  //   data.farmer_address,
-  // );
+  const ipfsHashInBytes32 = bs.getBytes32FromIpfsHash(data.ipfs_hash);
+  const addProductResp = await farmerContract.addProduct(
+    ipfsHashInBytes32,
+    data.farmer_address,
+  );
+
+  console.log('addProductResp ==>', addProductResp);
+
 
   const sql = `INSERT INTO product_info (farmer_address,eth_id,ipfs_hash,name,price,quantity,type) values(
     '${data.farmer_address}',
@@ -194,14 +214,13 @@ app.post('/add-product', async function(req, res) {
     '${data.type}'
     );`;
 
-    console.log("\n\nQuery :\n" + sql + "\n");
     const addProduct = await MySQL.executeQuery(sql);
     console.log("Adding status :" + addProduct);
     if(addProduct) {
       return true;
     }
     else {
-          return false;
+      return false;
     }
 });
 
@@ -260,11 +279,14 @@ app.post('/create-vendor', async function(req, res) {
   console.log(data);
 
   // store data to contract
-  // const ipfsHashInBytes32 = bs.getBytes32FromIpfsHash(data.ipfsHash);
-  // await vendorContract.addVendor(
-  //   ipfsHashInBytes32,
-  //   data.ethAddress,
-  // );
+  const ipfsHashInBytes32 = bs.getBytes32FromIpfsHash(data.ipfsHash);
+  const vendorAddResp = await vendorContract.addVendor(
+    ipfsHashInBytes32,
+    data.ethAddress,
+  );
+
+  console.log('vendorAddResp ===>', vendorAddResp);
+
 
   const addToLoginQuery = `INSERT INTO vendor_login(email, password)
     values(
@@ -310,19 +332,49 @@ app.post('/get-farmer-notification', async function(req, res) {
     farmer_address:req.body.farmer_address,
   }
 
+  let finalProductsResponse = [];
+
   console.log('Farmer Address :-', data.farmer_address);
 
-  const sql = `SELECT product_info.id,pending_products.farmer_address,product_info.eth_id,product_info.ipfs_hash,product_info.name,product_info.type,product_info.quantity,product_info.status,product_info.price,vendor_info.first_name, vendor_info.phone_number from ((pending_products INNER JOIN product_info ON pending_products.product_id = product_info.id) INNER JOIN vendor_info ON vendor_info.eth_address = pending_products.vendor_address) where pending_products.farmer_address = '${data.farmer_address} and product_info.status = 0';`;
+  const sql = `SELECT * FROM product_info where farmer_address = '${data.farmer_address}' AND status = 2;`;
 
   console.log('Query :', sql);
-  const fetchedNotification = await MySQL.getData(sql);
-  console.log('fetched data :-', fetchedNotification);
+  const productDetails = await MySQL.getData(sql);
+  console.log('fetched data :-', productDetails);
 
-  responseData = {
-    fetchedNotification: fetchedNotification,
+  for (let index = 0; index < productDetails.length; index++) {
+    productDetail = productDetails[index];
+    console.log('productDetail ===>', productDetail);
+
+    // Get notification request details
+    const productId = productDetail && productDetail.id;
+    const notificationReqQuery = `SELECT * FROM pending_products where product_id = ${productId};`;
+    const pendingProductDetailResp = await MySQL.getData(notificationReqQuery);
+
+    console.log('pendingProductDetailResp ==>', pendingProductDetailResp);
+
+    const fetchVendorQuery = `SELECT * FROM vendor_info where eth_address = '${pendingProductDetailResp[0].vendor_address}';`;
+    const vendorResp = await MySQL.getData(fetchVendorQuery);
+    console.log('vendorResp ===>', vendorResp);
+
+    let responseData = {
+        id: productDetail.id,
+        product_name: productDetail.name,
+        type_crop: productDetail.type,
+        price_per_kg: productDetail.price,
+        quantity_in_kg: productDetail.quantity,
+        vendor_contact: vendorResp[0].phone_number,
+        vendor_name: vendorResp[0].first_name,
+        vendor_address: vendorResp[0].eth_address
+    };
+
+    finalProductsResponse.push(responseData);
   }
 
-  res.end(JSON.stringify(responseData));
+  console.log('finalProductsResponse ===>', finalProductsResponse);
+
+
+  res.end(JSON.stringify(finalProductsResponse));
 
 });
 
@@ -357,8 +409,7 @@ app.post('/vendor-login', async function(req, res) {
 });
 
 app.post('/fetch-products',async function(req,res){
-  const sql = `SELECT id,farmer_address,eth_id,name,price,quantity,type FROM product_info where id NOT IN
-              (select product_id from pending_products where vendor_address='${req.body.vendor_address}');`;
+  const sql = `SELECT id,farmer_address,eth_id,name,price,quantity,type FROM product_info where  status = 0;`;
   const product_info = await MySQL.getData(sql);
   res.end(JSON.stringify(product_info));
 
@@ -408,6 +459,11 @@ app.post('/add-purchase-request-vendor',async function(req,res){
       res.end(JSON.stringify(data));
   }
 
+  // Update product status
+  const queryStatusChange = `UPDATE product_info set status = 2 where id = ${req.body.product_id};`;
+  const updatedResp = await MySQL.executeQuery(queryStatusChange);
+  console.log('updatedResp ===>', updatedResp);
+
 });
 
 
@@ -415,7 +471,7 @@ app.post('/fetch-pending-products',async function(req,res){
 
     const sql = `SELECT pi.id,pp.id as request_id,pi.farmer_address,eth_id,name,price,quantity,type
     FROM product_info pi,pending_products pp
-    WHERE pi.id=pp.product_id AND pp.vendor_address='${req.body.vendor_address}';`;
+    WHERE pi.id=pp.product_id AND pp.vendor_address='${req.body.vendor_address}' AND status = 2;`;
     const pending_products = await MySQL.getData(sql);
     res.end(JSON.stringify(pending_products));
 });
@@ -426,7 +482,7 @@ app.post('/delete-vendor-purchase-request',async function(req,res){
     product_id=${req.body.product_id} AND
     farmer_address='${req.body.farmer_address}' AND
     vendor_address='${req.body.vendor_address}';`;
-    const QueryStatus = await MySQL.executeQuery(sql);   
+    const QueryStatus = await MySQL.executeQuery(sql);
     if(QueryStatus)
     {
         res.send({status:true});
